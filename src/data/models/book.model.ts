@@ -35,14 +35,14 @@ export class BookPojo extends Model {
     type: NUMBER,
     field: 'isbn'
   })
-  icon: number
+  isbn: number
 
   @ForeignKey(() => AuthorPojo)
   @Column({
     type: NUMBER,
     field: 'id_author'
   })
-  asset: number
+  id_author: number
 
   @BelongsTo(() => AuthorPojo)
   author: AuthorPojo
@@ -51,6 +51,6 @@ export class BookPojo extends Model {
     type: NUMBER,
     field: 'language'
   })
-  stock: number
+  language: number
   
 }
