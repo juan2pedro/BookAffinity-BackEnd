@@ -1,13 +1,13 @@
 import { Sequelize } from "sequelize-typescript";
-import { AuthorPojo } from "../models/author.model";
+import { RolPojo } from "../models/rol.model";
 
 export const connect = () => {
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = 'admin'
-    const DB_PASSWORD = 'Admin1234'
-    const DB_SCHEMA = 'BookAffinity'
+    const DB_USERNAME = 'cami'
+    const DB_PASSWORD = 'caracola3'
+    const DB_SCHEMA = 'Bookaffinity'
     const DB_DIALECT : any = 'postgres'
 
     const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
@@ -24,7 +24,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([AuthorPojo])
+    sequelize.addModels([RolPojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize
