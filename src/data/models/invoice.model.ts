@@ -1,4 +1,4 @@
-//import { CopyPojo } from './copy.model';
+import { CopyPojo } from './copy.model';
 import { UserPojo } from './user.model';
 import { Table, Column, Model, BelongsTo, ForeignKey } from "sequelize-typescript";
 import { NUMBER } from "sequelize";
@@ -19,15 +19,15 @@ export class InvoicePojo extends Model {
   })
   id_invoice: number
 
-//   @ForeignKey(() => CopyPojo)
-//   @Column({
-//     type: NUMBER,
-//     field: 'id_copy'
-//   })
-//   id_copy: number
+  @ForeignKey(() => CopyPojo)
+  @Column({
+    type: NUMBER,
+    field: 'id_copy'
+  })
+  id_copy: number
 
-//   @BelongsTo(() => CopyPojo)
-//   copy: CopyPojo[]
+  @BelongsTo(() => CopyPojo)
+  copy: CopyPojo[]
 
   @ForeignKey(() => UserPojo)
   @Column({
