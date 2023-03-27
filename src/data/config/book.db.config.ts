@@ -5,8 +5,8 @@ export const connect = () => {
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = 'Admin'
-    const DB_PASSWORD = 'Admin1234'
+    const DB_USERNAME = 'tomy'
+    const DB_PASSWORD = 'admin'
     const DB_SCHEMA = 'Bookaffinity'
     const DB_DIALECT : any = 'postgres'
 

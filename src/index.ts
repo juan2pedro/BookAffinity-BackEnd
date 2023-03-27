@@ -1,4 +1,5 @@
 import express from "express";
+import copyRouter from "./routes/copy.routes";
 
 const app = express()
 const cors = require('cors')
@@ -19,3 +20,5 @@ app.get("/ping", (_req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
 });
+
+app.use('/api/copies', copyRouter);

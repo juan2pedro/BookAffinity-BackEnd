@@ -18,3 +18,12 @@ export class UserDTO {
     birthdate: Date
     funds: number
 }
+
+export class CopyDTO {
+    id_copy: number
+    visible: number
+    price: number
+    status: string
+    id_user : number
+    id_book : number
+}
