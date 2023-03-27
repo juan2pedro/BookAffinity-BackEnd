@@ -1,0 +1,27 @@
+version: '1.0'
+services:
+  api:
+    container_name: backaffinity-api
+    restart: always
+    build: .
+    depends_on:
+      - db
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - './:/src'
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - '5432:${DB_PORT}'
+    volumes:
+      - data:/data/db
+      - ./ddl.sql:/docker-entrypoint-initdb.d/create_table.sql
+volumes:
+  data: {}
+  
