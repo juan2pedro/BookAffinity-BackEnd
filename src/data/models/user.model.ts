@@ -1,4 +1,5 @@
-import { Table, Column, Model } from "sequelize-typescript";
+import { ChatPojo } from './chat.model';
+import { Table, Column, Model, HasMany } from "sequelize-typescript";
 import { STRING, NUMBER, DATE } from "sequelize";
 import { RolPojo } from "./rol.model";
 import { ForeignKey, BelongsTo } from "sequelize-typescript";
@@ -53,6 +54,9 @@ id_rol: number;
 @BelongsTo(() => RolPojo)
 rol: RolPojo;
 
+@HasMany(()=>ChatPojo)
+chats: ChatPojo[]
+
 @Column({
     type: DATE,
     field: "createdAt",
@@ -64,4 +68,5 @@ createdAt: Date;
     field: "updatedAt",
 })
 updatedAt: Date;
+    user_id: any;
 }
