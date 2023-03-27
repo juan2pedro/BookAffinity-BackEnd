@@ -1,32 +1,42 @@
 import { CopyPojo } from './copy.model';
-import { CopyPojo } from './copy.model';
-import { Table, Column, Model } from "sequelize-typescript";
-import { STRING, NUMBER } from "sequelize";
-import { HasMany } from "sequelize-typescript";
+import { UserPojo } from './user.model';
+import { Table, Column, Model, BelongsTo, ForeignKey } from "sequelize-typescript";
+import { NUMBER } from "sequelize";
 
 @Table({
   freezeTableName: true,
   schema: 'BookAffinity',
-  tableName: "author",
+  tableName: "invoice",
   createdAt: false,
   updatedAt: false
 })
-export class AuthorPojo extends Model {
+export class InvoicePojo extends Model {
   @Column({
     primaryKey: true,
     type: NUMBER,
-    field: 'id_author',
+    field: 'id_invoice',
     autoIncrement: true
   })
-  id_author: number
+  id_invoice: number
 
+  @ForeignKey(() => CopyPojo)
   @Column({
-    type: STRING,
-    field: 'name_author'
+    type: NUMBER,
+    field: 'id_copy'
   })
-  name_author: string
+  id_copy: number
 
-  @HasMany(() => BookPojo)
-  books: BookPojo[]
+  @BelongsTo(() => CopyPojo)
+  copy: CopyPojo[]
+
+  @ForeignKey(() => UserPojo)
+  @Column({
+    type: NUMBER,
+    field: 'id_user'
+  })
+  id_user: number
+
+  @BelongsTo(() => UserPojo)
+  user: UserPojo[]
 
 }
