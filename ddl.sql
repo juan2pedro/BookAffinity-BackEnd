@@ -39,7 +39,7 @@ GRANT pg_read_all_data, pg_write_all_data TO admin WITH ADMIN OPTION;
 
 ALTER DATABASE "BookAffinity_db" OWNER TO admin;
 
-\connect "BookAffinity_db"
+connect "BookAffinity_db"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
