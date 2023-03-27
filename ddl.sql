@@ -25,7 +25,7 @@ SET row_security = off;
 -- Role: admin
 -- DROP ROLE IF EXISTS admin;
 
-CREATE DATABASE "BookAffinity_db" WITH TEMPLATE = template0 ENCODING = 'UTF8';
+CREATE DATABASE "BookAffinity_db" IF NOT EXISTS WITH TEMPLATE = template0 ENCODING = 'UTF8';
 
 CREATE ROLE admin WITH
   LOGIN
@@ -34,12 +34,13 @@ CREATE ROLE admin WITH
   CREATEDB
   CREATEROLE
   NOREPLICATION
+  --Password -> Admin1234
   ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:eyuKlb82R/Yfn8WioWoM2g==$nTRC+FiAJr9xlp3kem2GUCp8NheAPxyLMOv9GLbHGh4=:mtgjJ3jagBpVzOdzAo38IkAj4xClvWx5Y3om/mpQGvI=';
 GRANT pg_read_all_data, pg_write_all_data TO admin WITH ADMIN OPTION;
 
 ALTER DATABASE "BookAffinity_db" OWNER TO admin;
 
-\connect "BookAffinity_db"
+--\connect "BookAffinity_db"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
