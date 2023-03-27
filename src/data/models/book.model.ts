@@ -5,7 +5,7 @@ import { ForeignKey, BelongsTo } from "sequelize-typescript";
 
 @Table({
   freezeTableName: true,
-  schema: 'public',
+  schema: 'BookAffinity',
   tableName: "book",
   createdAt: false,
   updatedAt: false
