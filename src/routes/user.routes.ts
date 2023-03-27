@@ -3,10 +3,10 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/all', userController.getAllUsers)
-router.get('/get/:id', userController.getUserById)
+router.get('/get/:email/:pass', userController.getUserbyEmailAndPassword)
 router.post('/add', userController.addUser)
-router.put('/update', userController.updateUser)
+router.get('/get/:id', userController.getUserById)
+
 
 export default router
 module.exports = router
