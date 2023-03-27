@@ -6,7 +6,10 @@ export class BookDTO {
     id_author?: number
     language?: number
 }
-
+export class AuthorDTO {
+    id_author: number
+    name_author: string
+}
 export class UserDTO {
     user_id: string
     username: string
