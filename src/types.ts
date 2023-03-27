@@ -76,8 +76,8 @@ export class UserDTO {
     email: string
     status: number
     id_rol: string
-    createAt?: Date
-    updateAt?: Date
+    createdAt?: Date
+    updatedAt?: Date
 }
 
  
