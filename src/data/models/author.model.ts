@@ -5,7 +5,7 @@ import { HasMany } from "sequelize-typescript";
 
 @Table({
   freezeTableName: true,
-  schema: 'public',
+  schema: 'BookAffinity',
   tableName: "author",
   createdAt: false,
   updatedAt: false

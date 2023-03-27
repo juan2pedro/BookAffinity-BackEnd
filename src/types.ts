@@ -18,9 +18,3 @@ export class UserDTO {
     birthdate: Date
     funds: number
 }
-
-export class UsersCryptosDTO {
-    user_id: string
-    crypto_id: string
-    amount: number
-}

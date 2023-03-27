@@ -25,7 +25,7 @@ SET row_security = off;
 -- Role: admin
 -- DROP ROLE IF EXISTS admin;
 
-CREATE DATABASE "BookAffinity_db" IF NOT EXISTS WITH TEMPLATE = template0 ENCODING = 'UTF8';
+CREATE DATABASE "BookAffinity_db" WITH TEMPLATE = template0 ENCODING = 'UTF8';
 
 CREATE ROLE admin WITH
   LOGIN
