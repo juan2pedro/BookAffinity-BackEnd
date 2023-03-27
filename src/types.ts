@@ -8,13 +8,13 @@ export class BookDTO {
 }
 
 export class UserDTO {
-    user_id: string
-    username: string
-    password: string
-    email: string
+    id_user: number
     name: string
-    surname1: string
-    surname2?: string
-    birthdate: Date
-    funds: number
+    pass: string
+    picture: string
+    email: string
+    status: number
+    id_rol: string
+    createAt: Date
+    updateAt: Date
 }
