@@ -1,23 +1,21 @@
 import express from "express";
-import userRouter from './routes/user.routes'
+import userRoutes from "./routes/user.routes";
 
 const app = express()
 const cors = require('cors')
-
-app.use(express.json())
-
-app.use('/api/user', userRouter)
-
 const PORT = 5000
-
 const whiteList = ['http://localhost:4200']
 
+app.use(express.json())
 app.use(cors({origin: whiteList}))
 
 app.get("/ping", (_req, res) => {
   console.log("Se ha hecho un ping")
   res.send("Pong")
 });
+
+app.use('/api/user', userRoutes)
+app.use('/api/chat', userRoutes)
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
