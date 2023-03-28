@@ -1,7 +1,7 @@
-import { BookPojo } from './book.model';
 import { Table, Column, Model } from "sequelize-typescript";
 import { STRING, NUMBER } from "sequelize";
 import { HasMany } from "sequelize-typescript";
+import { BookPojo } from './book.model';
 
 @Table({
   freezeTableName: true,

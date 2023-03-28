@@ -20,4 +20,37 @@ export class BookRepository {
       return [];
     }
   }
+
+  async addBook(newBook: BookPojo): Promise<number> {
+    try {
+      newBook = await this._bookRepository.create(newBook);
+      return newBook.id;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+  async getBookById(id: number): Promise<BookPojo | undefined> {
+    try {
+      return await this._bookRepository.findByPk(id);
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
+
+  async updateBook(newBookToUpdate: BookPojo): Promise<number> {
+    try {
+      newBookToUpdate = await this._bookRepository.update(newBookToUpdate, {
+        where: {
+          userId: newBookToUpdate.id_book,
+        },
+      });
+      return newBookToUpdate.id_book;
+    } catch (error) {
+      console.error(error);
+      return error.toString();
+    }
+  }
 }

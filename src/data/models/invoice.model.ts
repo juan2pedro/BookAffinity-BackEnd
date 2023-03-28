@@ -1,5 +1,4 @@
 import { CopyPojo } from './copy.model';
-import { CopyPojo } from './copy.model';
 import { Table, Column, Model } from "sequelize-typescript";
 import { STRING, NUMBER } from "sequelize";
 import { HasMany } from "sequelize-typescript";
