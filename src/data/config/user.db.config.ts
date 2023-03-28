@@ -2,9 +2,9 @@ import { RolPojo } from './../models/rol.model';
 import { Sequelize } from "sequelize-typescript";
 import { UserPojo } from "../models/user.model";
 import { ChatPojo } from '../models/chat.model';
+import propertiesreader from 'properties-reader'
 
-var propertiesReader = require('properties-reader');
-var properties = propertiesReader('/src/db_config.properties');
+var properties = propertiesreader('./src/db_config.properties');
 
 const USERNAME = properties.get('username');
 const PASSWORD = properties.get('password');
