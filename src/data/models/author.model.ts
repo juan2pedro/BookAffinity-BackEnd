@@ -26,6 +26,6 @@ export class AuthorPojo extends Model {
   name_author: string
 
   @HasMany(() => BookPojo)
-  books: BookPojo[]
+  book: BookPojo[]
 
 }
