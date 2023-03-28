@@ -1,7 +1,12 @@
 import { Table, Column, Model } from "sequelize-typescript";
 import { STRING, NUMBER } from "sequelize";
-import { AuthorPojo } from "./author.model";
-import { ForeignKey, BelongsTo } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, ForeignKey, HasMany } from "sequelize-typescript";
+import { BookCategoriesPojo } from "./book-categories";
+import { AuthorPojo } from './author.model';
+import { ImgBookPojo } from './img-book.model';
+import { CategoryPojo } from "./category.model";
+import { CommentPojo } from './comment.model';
+
 
 @Table({
   freezeTableName: true,
@@ -29,7 +34,7 @@ export class BookPojo extends Model {
     type: STRING,
     field: 'summary'
   })
-  value: string
+  summary: string
 
   @Column({
     type: NUMBER,
@@ -37,20 +42,31 @@ export class BookPojo extends Model {
   })
   isbn: number
 
-  @ForeignKey(() => AuthorPojo)
-  @Column({
-    type: NUMBER,
-    field: 'id_author'
-  })
-  id_author: number
-
-  @BelongsTo(() => AuthorPojo)
-  author: AuthorPojo
-
   @Column({
     type: NUMBER,
     field: 'language'
   })
   language: number
-  
+
+  @Column({
+    type: NUMBER,
+    field: 'status'
+  })
+  status: number
+
+  @BelongsToMany(() => CategoryPojo, () => BookCategoriesPojo)
+  category: CategoryPojo[];
+
+  @HasMany(() => ImgBookPojo)
+  imgBook: ImgBookPojo[];
+
+  @HasMany(() => CommentPojo)
+  comment: CommentPojo[];
+
+  @ForeignKey(() => AuthorPojo)
+  @Column
+  id_author: number;
+
+  @BelongsTo(() => AuthorPojo)
+  author: AuthorPojo;
 }
