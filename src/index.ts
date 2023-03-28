@@ -1,9 +1,6 @@
 import express from "express";
-<<<<<<< HEAD
 import copyRouter from "./routes/copy.routes";
-=======
 import userRoutes from "./routes/user.routes";
->>>>>>> origin/dev
 
 const app = express()
 const cors = require('cors')
