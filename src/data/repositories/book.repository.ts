@@ -20,4 +20,56 @@ export class BookRepository {
       return [];
     }
   }
+  async getBookById(id_book:number): Promise<BookPojo | undefined> {
+    try {
+      return this._bookRepository.findOne({
+        where: {
+          id_book : id_book
+        }
+      });
+     
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
+  async addBook(newBook: BookPojo): Promise<number> {
+    try {
+      newBook =  this._bookRepository.create(newBook);
+      return newBook.id_book;
+    } catch (error) {
+      console.error(error);
+      return error
+    }
+  }
+  async updateBook(): Promise<BookPojo[]> {
+    try {
+      const books = await this._bookRepository.findAll();
+      console.log("books:::", books);
+      return books;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+  async changeStatusBook(): Promise<BookPojo[]> {
+    try {
+      const books = await this._bookRepository.findAll();
+      console.log("books:::", books);
+      return books;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+  async deleteBook(): Promise<BookPojo[]> {
+    try {
+      const books = await this._bookRepository.findAll();
+      console.log("books:::", books);
+      return books;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
 }

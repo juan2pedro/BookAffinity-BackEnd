@@ -1,4 +1,5 @@
 import express from "express";
+import bookRouter from './routes/book.router'
 
 const app = express()
 const cors = require('cors')
@@ -16,6 +17,7 @@ app.get("/ping", (_req, res) => {
   res.send("Pong")
 });
 
+app.use('/api/book',bookRouter)
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
 });

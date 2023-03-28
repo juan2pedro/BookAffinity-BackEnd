@@ -79,5 +79,4 @@ export class UserDTO {
     createdAt?: Date
     updatedAt?: Date
 }
-
- 
+export type NewBookDTO = Omit<BookDTO, 'id_book'>
