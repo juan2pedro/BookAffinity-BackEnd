@@ -19,9 +19,7 @@ export const userController = {
   addUser: (req: any, res: any) => {
     try {
       const newUser = req.body;
-      userService.addUser(newUser).then((result) => {
-        res.json(result);
-      });
+      userService.addUser(newUser)
     } catch (excepcion) {
       console.log(excepcion);
       res.sendStatus(500);

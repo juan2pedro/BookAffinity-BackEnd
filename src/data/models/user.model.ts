@@ -1,7 +1,7 @@
 import { ChatPojo } from './chat.model';
 import { Table, Column, Model, HasMany } from "sequelize-typescript";
 import { STRING, NUMBER, DATE } from "sequelize";
-import { RolPojo } from "./rol.model";
+import { RolPojo } from './rol.model';
 import { ForeignKey, BelongsTo } from "sequelize-typescript";
 
 @Table({

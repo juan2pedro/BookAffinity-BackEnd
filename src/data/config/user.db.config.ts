@@ -1,5 +1,7 @@
+import { RolPojo } from './../models/rol.model';
 import { Sequelize } from "sequelize-typescript";
 import { UserPojo } from "../models/user.model";
+import { ChatPojo } from '../models/chat.model';
 
 var propertiesReader = require('properties-reader');
 var properties = propertiesReader('/src/db_config.properties');
@@ -30,7 +32,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([UserPojo])
+    sequelize.addModels([UserPojo, RolPojo, ChatPojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize
