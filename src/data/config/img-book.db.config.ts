@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
-import { RolPojo } from "../models/rol.model";
+import { ImgBookPojo } from "../models/img-book.model";
 import propertiesreader from 'properties-reader'
 
 var properties = propertiesreader('./src/db_config.properties');
@@ -13,7 +13,7 @@ export const connect = () => {
     const DB_NAME = 'BookAffinity_db'
     const DB_USERNAME = USERNAME
     const DB_PASSWORD = PASSWORD
-    const DB_SCHEMA = 'Bookaffinity'
+    const DB_SCHEMA = 'BookAffinity'
     const DB_DIALECT : any = 'postgres'
 
     const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
@@ -30,9 +30,9 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([RolPojo])
+    sequelize.addModels([ImgBookPojo])
     const db : any = {}
-    db.Sequelize = sequelize
+    db.Sequelize = Sequelize
     db.sequelize = sequelize
 
     return db

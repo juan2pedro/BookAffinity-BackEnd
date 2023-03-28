@@ -1,3 +1,4 @@
+import { RolPojo } from './../models/rol.model';
 import { UserPojo } from "../models/user.model";
 import { connect } from "../config/user.db.config";
 import { v4 as uuid } from 'uuid'
@@ -5,10 +6,12 @@ import { v4 as uuid } from 'uuid'
 export class UserRepository {
 _db: any = {};
 _userRepository: any;
+_rolRepository: any;
 
 constructor() {
     this._db = connect();
     this._userRepository = this._db.sequelize.getRepository(UserPojo);
+    this._rolRepository = this._db.sequelize.getRepository(RolPojo);
 }
 
 async getUserbyEmailAndPassword(email:string, password:string): Promise<UserPojo[]> {
@@ -36,7 +39,7 @@ async getAllUsers(): Promise <UserPojo[]>{
 }
 async getUserbyId(id:number) : Promise<UserPojo | undefined>{
     try{
-        return await this._userRepository.findByPk(id)
+        return await this._userRepository.findByPk(id, { include : [this._rolRepository]})
     }catch (error) {
         console.error(error)
         return undefined
