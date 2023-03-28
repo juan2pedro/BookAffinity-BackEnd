@@ -1,6 +1,6 @@
 import { BookRepository } from "../data/repositories/book.repository";
 import { BookPojo } from "../data/models/book.model";
-import { BookDTO } from "../types";
+import { BookDTO} from "../types";
 
 export class BookService {
   _bookRepository: BookRepository;
@@ -27,7 +27,7 @@ export class BookService {
     return booksPromise;
   }
 
-  async getBookById(id_book:number): Promise<BookDTO | undefined> {
+  async getBookById(id_book: number): Promise<BookDTO | undefined> {
     const bookPromise = await this._bookRepository
       .getBookById(id_book)
       .then((bookAsPojo) => {
@@ -56,21 +56,10 @@ export class BookService {
     return bookPromise;
   }
 
-  async updateBook(book: BookDTO): Promise<any> {
-    const updateBook = async updateBook.update({
-      title: title,
 
-    },{
-      where:{
-        id_book: id_book
-      }
-    })
-  }
-
-  async deleteBook(book: BookDTO): Promise<any> {
-    const bookPojo: BookPojo = this.parseDTOIntoPojo(book);
+  async deleteBook(id_book: number): Promise<any> {
     const bookPromise = await this._bookRepository
-      .deleteBook(bookPojo)
+      .deleteBook(id_book)
       .then((book_id) => {
         return book_id;
       })
@@ -79,6 +68,16 @@ export class BookService {
         throw error;
       });
     return bookPromise;
+  }
+  async updateBook(bookUpdated: BookDTO): Promise<number> {
+    const bookPojo: BookPojo = this.parseDTOIntoPojo(bookUpdated)
+    const bookPromise = await this._bookRepository.
+      updateBook(bookPojo).then(bookId => { return bookId })
+      .catch(error => {
+        console.error(error);
+        throw error
+      })
+    return bookPromise
   }
 
   parsePojoIntoDTO(bookPojo: BookPojo): BookDTO {

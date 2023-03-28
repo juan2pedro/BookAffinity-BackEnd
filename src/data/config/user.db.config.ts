@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize-typescript";
 import { UserPojo } from "../models/user.model";
+import propertiesReader from 'properties-reader'
 
-var propertiesReader = require('properties-reader');
-var properties = propertiesReader('/src/db_config.properties');
+var properties = propertiesReader('./src/db_config.properties')
 
 const USERNAME = properties.get('username');
 const PASSWORD = properties.get('password');
