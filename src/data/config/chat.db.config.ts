@@ -1,20 +1,13 @@
-import { RolPojo } from './../models/rol.model';
+import { UserPojo } from './../models/user.model';
 import { Sequelize } from "sequelize-typescript";
-import { UserPojo } from "../models/user.model";
-import { ChatPojo } from '../models/chat.model';
-
-var propertiesReader = require('properties-reader');
-var properties = propertiesReader('/src/db_config.properties');
-
-const USERNAME = properties.get('username');
-const PASSWORD = properties.get('password');
+import { ChatPojo } from "../models/chat.model";
 
 export const connect = () => {
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = USERNAME
-    const DB_PASSWORD = PASSWORD
+    const DB_USERNAME = 'cami'
+    const DB_PASSWORD = 'Caracola3!'
     const DB_SCHEMA = 'Bookaffinity'
     const DB_DIALECT : any = 'postgres'
 
@@ -32,9 +25,9 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([UserPojo, RolPojo, ChatPojo])
+    sequelize.addModels([ChatPojo, UserPojo])
     const db : any = {}
-    db.Sequelize = Sequelize
+    db.Sequelize = sequelize
     db.sequelize = sequelize
 
     return db
