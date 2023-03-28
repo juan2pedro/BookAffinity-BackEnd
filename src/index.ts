@@ -1,4 +1,5 @@
 import express from "express";
+import copyRouter from "./routes/copy.routes";
 import userRoutes from "./routes/user.routes";
 
 const app = express()
@@ -20,3 +21,5 @@ app.use('/api/chat', userRoutes)
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
 });
+
+app.use('/api/copies', copyRouter);
