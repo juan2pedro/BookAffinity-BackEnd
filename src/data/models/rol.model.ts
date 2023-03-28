@@ -4,10 +4,13 @@ import { UserPojo } from "./user.model";
 import { HasMany } from "sequelize-typescript";
 
 @Table({
-freezeTableName: true,
-schema: 'BookAffinity',
-tableName: "rol",
+    freezeTableName: true,
+    schema: 'BookAffinity',
+    tableName: "rol",
+    createdAt: false,
+    updatedAt: false
 })
+
 export class RolPojo extends Model {
 @Column({
     primaryKey: true,
@@ -15,7 +18,7 @@ export class RolPojo extends Model {
     field: 'id_rol',
     autoIncrement: true
 })
-id_rol: number
+rol_id: number
 
 @Column({
     type: STRING,

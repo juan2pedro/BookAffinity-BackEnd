@@ -19,11 +19,7 @@ export class CategoryDTO {
     id_category: number
     name_category: number
 }
-export class ChatDTO{
-    id_chat: number
-    id_user1: number
-    id_user2: number
-}
+
 export class CommentDTO{
     id_comment: number
     rating: number
@@ -77,11 +73,18 @@ export class UserDTO {
     email: string
     status: number
     id_rol: string
+    rol?: RolDTO
+    chats?: ChatDTO[]
     createdAt?: Date
     updatedAt?: Date
 }
 
- 
+export class ChatDTO {
+    id_chat: number
+    id_user1:number
+    id_user2:number
+}
+
 export type NewUserDTO = Omit<UserDTO, 'id_user'>
 export type NewBookDTO = Omit<BookDTO, 'id_book'>
 export type NewChatDTO = Omit<ChatDTO, 'id_chat'>
