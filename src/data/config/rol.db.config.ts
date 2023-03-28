@@ -6,7 +6,7 @@ export const connect = () => {
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
     const DB_USERNAME = 'cami'
-    const DB_PASSWORD = 'caracola3'
+    const DB_PASSWORD = 'Caracola3!'
     const DB_SCHEMA = 'Bookaffinity'
     const DB_DIALECT : any = 'postgres'
 
@@ -26,7 +26,7 @@ export const connect = () => {
 
     sequelize.addModels([RolPojo])
     const db : any = {}
-    db.Sequelize = Sequelize
+    db.Sequelize = sequelize
     db.sequelize = sequelize
 
     return db

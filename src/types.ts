@@ -70,21 +70,22 @@ export class RolDTO {
   name: string;
 }
 export class UserDTO {
-  id_user: number;
-  name: string;
-  pass: string;
-  picture: string;
-  email: string;
-  status: number;
-  id_rol: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  id_user: number
+  name: string
+  pass: string
+  picture: string
+  email: string
+  status: number
+  id_rol: string
+  rol?: RolDTO
+  chats?: ChatDTO[]
+  createdAt?: Date
+  updatedAt?: Date
 }
-
-export type NewUserDTO = Omit<UserDTO, "id_user">;
-export type NewBookDTO = Omit<BookDTO, "id_book">;
-export type NewChatDTO = Omit<ChatDTO, "id_chat">;
-export type NewCommentDTO = Omit<CommentDTO, "id_comment">;
-export type NewCopyDTO = Omit<CopyDTO, "id_copy">;
-export type NewInvoiceDTO = Omit<InvoiceDTO, "id_invoice">;
-export type NewMessageDTO = Omit<MessageDTO, "userid">;
+export type NewUserDTO = Omit<UserDTO, 'id_user'>
+export type NewBookDTO = Omit<BookDTO, 'id_book'>
+export type NewChatDTO = Omit<ChatDTO, 'id_chat'>
+export type NewCommentDTO = Omit<CommentDTO, 'id_comment'>
+export type NewCopyDTO = Omit<CopyDTO, 'id_copy'>
+export type NewInvoiceDTO = Omit<InvoiceDTO, 'id_invoice'>
+export type NewMessageDTO = Omit<MessageDTO, 'userid'>
