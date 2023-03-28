@@ -32,7 +32,7 @@ export const connect = () => {
 
     sequelize.addModels([RolPojo])
     const db : any = {}
-    db.Sequelize = Sequelize
+    db.Sequelize = sequelize
     db.sequelize = sequelize
 
     return db
