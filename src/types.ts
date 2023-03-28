@@ -77,14 +77,15 @@ export class UserDTO {
     createdAt?: Date
     updatedAt?: Date
 }
-
-export type NewUserDTO = Omit<UserDTO, 'user_id'>
-
 export class ChatDTO {
     id_chat: number
     id_user1:number
     id_user2:number
 }
+
+
+export type NewUserDTO = Omit<UserDTO, 'user_id'>
+
 
 export type newMessage = Omit<ChatDTO, 'id_chat'>
 
