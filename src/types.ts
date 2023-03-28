@@ -31,6 +31,7 @@ export class CopyDTO{
     id_copy: number
     price: number
     visible: number
+    status: string
     id_user: number
     id_book: number
 }
@@ -78,14 +79,16 @@ export class UserDTO {
     updatedAt?: Date
 }
 
-export type NewUserDTO = Omit<UserDTO, 'user_id'>
-
 export class ChatDTO {
     id_chat: number
     id_user1:number
     id_user2:number
 }
 
-export type newMessage = Omit<ChatDTO, 'id_chat'>
-
-
+export type NewUserDTO = Omit<UserDTO, 'id_user'>
+export type NewBookDTO = Omit<BookDTO, 'id_book'>
+export type NewChatDTO = Omit<ChatDTO, 'id_chat'>
+export type NewCommentDTO = Omit<CommentDTO, 'id_comment'>
+export type NewCopyDTO = Omit<CopyDTO, 'id_copy'>
+export type NewInvoiceDTO = Omit<InvoiceDTO, 'id_invoice'>
+export type NewMessageDTO = Omit<MessageDTO, 'userid'>
