@@ -1,6 +1,10 @@
 import express from "express";
+
 import bookRouter from './routes/book.router'
 import userRoutes from './routes/user.routes'
+import copyRouter from "./routes/copy.routes";
+
+
 
 const app = express()
 const cors = require('cors')
@@ -22,3 +26,5 @@ app.use('/api/chat', userRoutes)
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
 });
+
+app.use('/api/copies', copyRouter);
