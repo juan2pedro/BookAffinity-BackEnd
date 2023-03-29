@@ -39,7 +39,7 @@ async getAllUsers(): Promise <UserPojo[]>{
 }
 async getUserbyId(id:number) : Promise<UserPojo | undefined>{
     try{
-        return await this._userRepository.findByPk(id, { include : [this._rolRepository]})
+        return await this._userRepository.findByPk(id)
     }catch (error) {
         console.error(error)
         return undefined

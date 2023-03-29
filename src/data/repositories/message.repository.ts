@@ -1,36 +1,44 @@
 import { ChatPojo } from './../models/chat.model';
 import { UserPojo } from "../models/user.model";
+import { MessagePojo } from "../models/message.model";
 import { connect } from "../config/user.db.config";
 
-export class ChatRepository {
+export class MessageRepository {
 _db: any = {};
 _userRepository: any;
 _chatRepository: any;
+_messageRepository: any;
+
 
 constructor() {
     this._db = connect();
     this._userRepository = this._db.sequelize.getRepository(UserPojo);
     this._chatRepository = this._db.sequelize.getRepository(ChatPojo);
+    this._messageRepository = this._db.sequelize.getRepository(MessagePojo);
+
 }
 
 
-async getAllMessage(): Promise <ChatPojo[]>{
-    try {
-        return await this._chatRepository.findAll()
-    } catch (error){
+async getMessagebyChatId(id:number) : Promise<MessagePojo[] | undefined>{
+    try{
+        return await this._messageRepository.findAll({
+            where: {
+                id_chat: id
+            }
+        });
+    }catch (error) {
         console.error(error)
-        return []
+        return undefined
     }
 }
 
-
-async addMessage (newMessage: ChatPojo) : Promise<string>{
+async addMessage (newMessage: MessagePojo) : Promise<number>{
     try{
-        newMessage= await this._chatRepository.create(newMessage)
+        newMessage= await this._messageRepository.create(newMessage)
         return newMessage.id
     } catch (error) {
         console.log(error)
-        return 'ok'
+        return -1
     }
 }
 }

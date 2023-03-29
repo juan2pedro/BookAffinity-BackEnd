@@ -1,21 +1,22 @@
-import { RolDTO } from './../types';
+import { RolDTO, ChatDTO, ChatUserDTO, MessageDTO } from './../types';
 import { UserRepository } from "../data/repositories/user.repository";
 import { ChatRepository } from "../data/repositories/chat.repository";
+import { MessageRepository } from "../data/repositories/message.repository";
+
 import { UserPojo } from "../data/models/user.model";
 import { ChatPojo } from "../data/models/chat.model";
 
 import { UserDTO } from "../types";
-import { ChatDTO } from "../types";
+import { MessagePojo } from '../data/models/message.model';
 export class UserService {
   _userRepository: UserRepository;
   _chatRepository: ChatRepository;
-
+  _messageRepository: MessageRepository;
 
   constructor() {
     this._userRepository = new UserRepository();
     this._chatRepository = new ChatRepository();
-
-
+    this._messageRepository = new MessageRepository();
   }
 
   async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserDTO[]> {
@@ -54,20 +55,6 @@ export class UserService {
 // DESPUÉS, GET USER BY ID LIST
 // (CLICK) => GET CHAT MESSAGES BY CHAT ID
 
-// async getAllChats() : Promise<ChatDTO[]>{
-//   const messagePromise = await this._chatRepository.getAllMessage().then(chatsAsPojo =>{
-//       let chatsAsDto : ChatDTO[] = []
-//       chatsAsPojo.forEach(chatAsPojo => {
-//           let chatAsDto = this.parsePojoIntoDTO(chatAsPojo)
-//           chatsAsDto.push(chatAsDto)
-//       })
-//       return chatsAsDTO
-//   }) .catch(error=>{
-//       console.log(error)
-//       throw error
-//   })
-//   return messagePromise
-// }
 
 
   async addUser(user: UserDTO): Promise<number> {
@@ -83,6 +70,19 @@ export class UserService {
       });
     return userPromise;
   }
+  async addMessage(message: MessageDTO): Promise<number> {
+    const messagePojo: MessagePojo = this.parseDTOIntoMessagePojo(message);
+    const messagePromise = await this._messageRepository
+      .addMessage(messagePojo)
+      .then((message_id) => {
+        return message_id;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return messagePromise;
+  }
   async getUserbyId (id:number) : Promise<UserDTO | undefined>{
     const userPromise = await this._userRepository.getUserbyId(id).then(userAsPojo =>{
         if(!!userAsPojo) {
@@ -96,6 +96,47 @@ export class UserService {
             throw error
     })
     return userPromise
+  }
+  async getMessagebyChatId(id_chat:number): Promise<MessageDTO[]> {
+    const messagesPromise = await this._messageRepository
+      .getMessagebyChatId(id_chat)
+      .then((messagesAsPojo) => {
+        let messagesAsDTO: MessageDTO[] = [];
+        messagesAsPojo.forEach((messageAsPojo) => {
+          let messageAsDTO = this.parsePojoIntoMessageDtos(messageAsPojo);
+          messagesAsDTO.push(messageAsDTO);
+        });
+        return messagesAsDTO;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return messagesPromise;
+  }
+
+  async getChatbyUserId (id:number) : Promise<ChatDTO[]>{
+    const chatPromise = await this._chatRepository.getChatbyUserId(id).then(chatsAsPojo =>{
+        if(!!chatsAsPojo && chatsAsPojo.length > 0) {
+          console.log(chatsAsPojo)
+          let chatsAsDTO : ChatDTO[]
+          chatsAsPojo.forEach(chatAsPojo => {
+            let chatAsDTO = this.parsePojoIntoChatDtos(chatAsPojo)
+            let user1AsDTO = this.parseUserPojoFromChatPojoToUserDto(chatAsPojo.dataValues.user1)
+            chatAsDTO.user1 = user1AsDTO
+            let user2AsDTO = this.parseUserPojoFromChatPojoToUserDto(chatAsPojo.dataValues.user2)
+            chatAsDTO.user2 = user2AsDTO
+            chatsAsDTO.push(chatAsDTO)
+          })
+          return chatsAsDTO
+        }
+        else
+            return [] 
+      }) .catch(error=>{
+          console.log(error)
+          throw error
+    })
+    return chatPromise
   }
 
   // async getUserByIdList (ids : number[] ) : Promise<UserDTO[]> {
@@ -123,27 +164,52 @@ export class UserService {
     return userDTO;
   }
 
-  parsePojoIntoChatDtos(userPojo: UserPojo): ChatDTO[] {
-    const chats : ChatPojo[] = userPojo.dataValues.chats
-    let chatDtos : ChatDTO[] = []
-    if(!!chats && chats.length > 0) {
-      chats.forEach(chatPojo => {
-        const chatDto : ChatDTO = {
-          id_chat: chatPojo.dataValues.id_chat,
-          id_user1: chatPojo.dataValues.id_user1,
-          id_user2: chatPojo.dataValues.id_user2
-        }
-        chatDtos.push(chatDto)
-      })
-    } 
+  parsePojoIntoChatDtos(chatPojo: ChatPojo): ChatDTO {
+    let chatDto : ChatDTO = {
+      id_chat: chatPojo.dataValues.id_chat,
+      id_user1: chatPojo.dataValues.id_user1,
+      id_user2: chatPojo.dataValues.id_user2
+    }
 
-    return chatDtos
+    return chatDto
+  }
+
+  parseUserPojoFromChatPojoToUserDto(userPojo: UserPojo) : ChatUserDTO {
+    let userDto : ChatUserDTO = {
+      id_user: userPojo.dataValues.user_id,
+      name: userPojo.dataValues.name,
+      picture: userPojo.dataValues.picture,
+      email: userPojo.dataValues.email,
+      status: userPojo.dataValues.status,
+      id_rol: userPojo.dataValues.id_rol,
+      createdAt: userPojo.dataValues.createdAt,
+      updatedAt: userPojo.dataValues.updatedAt
+    }
+
+    return userDto
+  }
+
+  parsePojoIntoMessageDtos(messagePojo: MessagePojo): MessageDTO {
+    let messageDto : MessageDTO = {
+      id_message: messagePojo.dataValues.id_message,
+      text: messagePojo.dataValues.text,
+      date: messagePojo.dataValues.date,
+      id_chat: messagePojo.dataValues.id_chat,
+
+    }
+
+    return messageDto
   }
   
 
   parseDTOIntoPojo(userDTO: UserDTO): UserPojo {
 
     return userDTO as unknown as UserPojo;
+  }
+
+  parseDTOIntoMessagePojo(meesageDTO: MessageDTO): MessagePojo {
+
+    return meesageDTO as unknown as MessagePojo;
   }
 }
 

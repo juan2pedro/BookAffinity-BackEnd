@@ -21,6 +21,7 @@ app.get("/ping", (_req, res) => {
 app.use('/api/book',bookRouter)
 app.use('/api/user', userRoutes)
 app.use('/api/chat', userRoutes)
+app.use('/api/message', userRoutes)
 app.use('/api/copy', copyRouter)
 
 app.listen(PORT, () => {

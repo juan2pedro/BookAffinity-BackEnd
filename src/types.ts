@@ -19,11 +19,15 @@ export class CategoryDTO {
   id_category: number;
   name_category: number;
 }
+
 export class ChatDTO {
-  id_chat: number;
-  id_user1: number;
-  id_user2: number;
+    id_chat: number
+    id_user1:number
+    id_user2:number
+    user1? : ChatUserDTO
+    user2? : ChatUserDTO
 }
+
 export class CommentDTO {
   id_comment: number;
   rating: number;
@@ -69,6 +73,7 @@ export class RolDTO {
   id_rol: number;
   name: string;
 }
+
 export class UserDTO {
   id_user: number
   name: string
@@ -82,6 +87,7 @@ export class UserDTO {
   createdAt?: Date
   updatedAt?: Date
 }
+
 export type NewUserDTO = Omit<UserDTO, 'id_user'>
 export type NewBookDTO = Omit<BookDTO, 'id_book'>
 export type NewChatDTO = Omit<ChatDTO, 'id_chat'>
@@ -89,3 +95,4 @@ export type NewCommentDTO = Omit<CommentDTO, 'id_comment'>
 export type NewCopyDTO = Omit<CopyDTO, 'id_copy'>
 export type NewInvoiceDTO = Omit<InvoiceDTO, 'id_invoice'>
 export type NewMessageDTO = Omit<MessageDTO, 'userid'>
+export type ChatUserDTO = Omit<UserDTO, 'pass'>
