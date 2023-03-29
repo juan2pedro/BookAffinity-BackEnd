@@ -1,6 +1,6 @@
 import { ChatPojo } from './../models/chat.model';
 import { UserPojo } from "../models/user.model";
-import { connect } from "../config/user.db.config";
+import { connect } from "../config/message.db.config";
 
 export class ChatRepository {
 _db: any = {};
