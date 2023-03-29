@@ -1,8 +1,7 @@
-import { RolDTO, ChatDTO, ChatUserDTO, MessageDTO } from './../types';
+import { RolDTO, ChatUserDTO, NewMessageDTO, NewChatDTO, NewUserDTO, ChatDTO, MessageDTO } from './../types';
 import { UserRepository } from "../data/repositories/user.repository";
 import { ChatRepository } from "../data/repositories/chat.repository";
 import { MessageRepository } from "../data/repositories/message.repository";
-
 import { UserPojo } from "../data/models/user.model";
 import { ChatPojo } from "../data/models/chat.model";
 
@@ -70,7 +69,7 @@ export class UserService {
       });
     return userPromise;
   }
-  async addMessage(message: MessageDTO): Promise<number> {
+  async addMessage(message: NewMessageDTO): Promise<number> {
     const messagePojo: MessagePojo = this.parseDTOIntoMessagePojo(message);
     const messagePromise = await this._messageRepository
       .addMessage(messagePojo)
@@ -139,9 +138,24 @@ export class UserService {
     return chatPromise
   }
 
-  // async getUserByIdList (ids : number[] ) : Promise<UserDTO[]> {
-    
-  // }
+  async getUserByChatIdList (ids_chat : number[] ) : Promise<UserDTO[]> {
+    const userPromise = await this._userRepository.getUserByChatIdList(ids_chat).then(usersAsPojo =>{
+      if(!!usersAsPojo) {
+        let userList : UserDTO[]
+        console.log(usersAsPojo)
+        usersAsPojo.forEach(userAsPojo => {
+          userList.push(this.parsePojoIntoDTO(userAsPojo))
+          })        
+        return userList
+      }
+      else
+          return undefined 
+      }) .catch(error=>{
+          console.log(error)
+          throw error
+    })
+    return userPromise
+  }
 
   parsePojoIntoDTO(userPojo: UserPojo): UserDTO {
     const rolDTO: RolDTO = {
@@ -202,9 +216,14 @@ export class UserService {
   }
   
 
-  parseDTOIntoPojo(userDTO: UserDTO): UserPojo {
+  parseDTOIntoPojo(userDTO: NewUserDTO): UserPojo {
 
     return userDTO as unknown as UserPojo;
+  }
+
+  parseChatDTOIntoPojo(chatDTO: NewChatDTO): ChatPojo {
+
+    return chatDTO as unknown as ChatPojo;
   }
 
   parseDTOIntoMessagePojo(meesageDTO: MessageDTO): MessagePojo {

@@ -79,5 +79,17 @@ export const userController = {
         res.sendStatus(500)
     })
 },
+getUserByChatIdList : (req: any, res: any) =>{
+  try{
+      const user_id = req.body
+      userService.getUserbyId(user_id) .then (result =>{
+          res.json(result)
+      })
+  } 
+  catch (Error){
+      console.log(Error)
+      res.sendStatus(500)
+  }
+},
 
 };

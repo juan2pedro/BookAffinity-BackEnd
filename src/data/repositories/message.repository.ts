@@ -1,7 +1,7 @@
 import { ChatPojo } from './../models/chat.model';
 import { UserPojo } from "../models/user.model";
-import { MessagePojo } from "../models/message.model";
-import { connect } from "../config/user.db.config";
+import { MessagePojo } from '../models/message.model';
+import { connect } from '../config/user.db.config'; 
 
 export class MessageRepository {
 _db: any = {};
@@ -31,14 +31,22 @@ async getMessagebyChatId(id:number) : Promise<MessagePojo[] | undefined>{
         return undefined
     }
 }
-
-async addMessage (newMessage: MessagePojo) : Promise<number>{
-    try{
-        newMessage= await this._messageRepository.create(newMessage)
-        return newMessage.id
-    } catch (error) {
-        console.log(error)
-        return -1
+    async addMessage (newMessage: MessagePojo) : Promise<number>{
+        try{
+            newMessage= await this._messageRepository.create(newMessage)
+            return newMessage.id
+        } catch (error) {
+            console.log(error)
+            return -1
+        }
     }
-}
+
+    async getMessageByChatId(id : string) : Promise<MessagePojo[] | undefined>{
+        try {
+            return await this._messageRepository.findByPk(id)
+        } catch (error) {
+            console.error(error)
+            return undefined
+        }
+    }
 }
