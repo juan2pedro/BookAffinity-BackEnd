@@ -3,7 +3,6 @@ import { MessagePojo } from './../models/message.model';
 import { UserPojo } from './../models/user.model';
 import { Sequelize } from "sequelize-typescript";
 import { ChatPojo } from "../models/chat.model";
-import { RolPojo } from '../models/rol.model';
 import propertiesReader from 'properties-reader'
 
 
