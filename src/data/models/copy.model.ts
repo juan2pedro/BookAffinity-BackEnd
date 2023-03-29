@@ -1,7 +1,7 @@
 import { Table, Column, Model } from "sequelize-typescript";
 import { HasOne } from "sequelize-typescript";
 import { STRING, NUMBER } from "sequelize";
- import { InvoicePojo } from "./invoice.model";
+import { InvoicePojo } from "./invoice.model";
 
 @Table({
   freezeTableName: true,
