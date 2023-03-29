@@ -1,6 +1,8 @@
 import { RolPojo } from "./../models/rol.model";
 import { UserPojo } from "../models/user.model";
 import { connect } from "../config/user.db.config";
+import { Op } from 'sequelize';
+// ↑ alternativa -> const { Op } = require("sequelize");
 
 export class UserRepository {
   _db: any = {};
@@ -13,50 +15,60 @@ export class UserRepository {
     this._rolRepository = this._db.sequelize.getRepository(RolPojo);
   }
 
-  async getUserbyEmailAndPassword(
-    email: string,
-    password: string
-  ): Promise<UserPojo[]> {
-    try {
-      const user = await this._userRepository.findOne({
-        where: {
-          email: email,
-          password: password,
-        },
-      });
-      console.log("user:::", user);
-      return user;
-    } catch (error) {
-      console.error(error);
-      return [];
+    async getUserbyEmailAndPassword(email:string, password:string): Promise<UserPojo[]> {
+        try {
+            const user = await this._userRepository.findOne({
+                where: {
+                    email: email,
+                    password: password
+                }
+            });
+            console.log("user:::", user);
+            return user;
+        } catch (error) {
+            console.error(error);
+        return [];
+        }
     }
-  }
-  async getAllUsers(): Promise<UserPojo[]> {
-    try {
-      return await this._userRepository.findAll();
-    } catch (error) {
-      console.error(error);
-      return [];
+    async getAllUsers(): Promise <UserPojo[]>{
+        try {
+            return await this._userRepository.findAll()
+        } catch (error){
+            console.error(error)
+            return []
+        }
     }
-  }
-  async getUserbyId(id: number): Promise<UserPojo | undefined> {
-    try {
-      return await this._userRepository.findByPk(id, {
-        include: [this._rolRepository],
-      });
-    } catch (error) {
-      console.error(error);
-      return undefined;
+    async getUserbyId(id:number) : Promise<UserPojo | undefined>{
+        try{
+            return await this._userRepository.findByPk(id)
+        }catch (error) {
+            console.error(error)
+            return undefined
+        }
     }
-  }
 
-  async addUser(newUser: UserPojo): Promise<number> {
-    try {
-      newUser = await this._userRepository.create(newUser);
-      return newUser.id;
-    } catch (error) {
-      console.log(error);
-      return -1;
+    async addUser (newUser: UserPojo) : Promise<number>{
+        try{
+            newUser = await this._userRepository.create(newUser)
+            return newUser.id
+        } catch (error) {
+            console.log(error)
+            return -1
+        }
     }
-  }
+
+    async getUserByChatIdList(id_chats : number[]) : Promise<UserPojo[] | undefined>{
+        try {
+            return await this._userRepository.findOne({
+                where: {
+                    id_chat: {
+                    [Op.or]: id_chats
+                    }
+                }
+            })
+        } catch (error) {
+            console.error(error)
+            return undefined
+        }
+    }
 }

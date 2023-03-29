@@ -1,6 +1,7 @@
-import { Table, Column, Model, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Table, Column, Model, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
 import { NUMBER } from "sequelize";
 import { UserPojo } from "./user.model";
+import { MessagePojo } from "./message.model";
 
 
 @Table({
@@ -36,5 +37,8 @@ id_user2: Number
 
 @BelongsTo(()=>UserPojo)
 user2: UserPojo
+
+@HasMany(() => MessagePojo)
+message: MessagePojo[]
 
 }
