@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 import { ImgBookPojo } from "../models/img-book.model";
 import propertiesreader from 'properties-reader'
 
-var properties = propertiesreader('./src/db_config.properties');
+var properties = propertiesreader('../../db_config.properties');
 
 const USERNAME = properties.get('username');
 const PASSWORD = properties.get('password');
