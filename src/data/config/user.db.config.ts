@@ -4,7 +4,6 @@ import { Sequelize } from "sequelize-typescript";
 import { UserPojo } from "../models/user.model";
 import { ChatPojo } from '../models/chat.model';
 import propertiesReader from 'properties-reader'
-import { MessagePojo } from '../models/message.model';
 
 export const connect = () => {
     var properties = propertiesReader('./src/db_config.properties')
