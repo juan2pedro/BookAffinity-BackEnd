@@ -1,3 +1,4 @@
+import { MessagePojo } from './../models/message.model';
 import { RolPojo } from './../models/rol.model';
 import { Sequelize } from "sequelize-typescript";
 import { UserPojo } from "../models/user.model";
