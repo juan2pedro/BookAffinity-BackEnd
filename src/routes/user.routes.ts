@@ -7,6 +7,7 @@ router.get('/get/:email/:pass', userController.getUserbyEmailAndPassword)
 router.post('/add', userController.addUser)
 router.get('/all', userController.getAllUsers)
 router.get('/get/:id', userController.getUserById)
+router.post('/get/by-list', userController.getUserByChatIdList)
 
 
 export default router

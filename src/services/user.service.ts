@@ -1,4 +1,4 @@
-import { RolDTO } from './../types';
+import { NewChatDTO, NewUserDTO, RolDTO } from './../types';
 import { UserRepository } from "../data/repositories/user.repository";
 import { ChatRepository } from "../data/repositories/chat.repository";
 import { UserPojo } from "../data/models/user.model";
@@ -83,6 +83,7 @@ export class UserService {
       });
     return userPromise;
   }
+  
   async getUserbyId (id:number) : Promise<UserDTO | undefined>{
     const userPromise = await this._userRepository.getUserbyId(id).then(userAsPojo =>{
         if(!!userAsPojo) {
@@ -98,9 +99,24 @@ export class UserService {
     return userPromise
   }
 
-  // async getUserByIdList (ids : number[] ) : Promise<UserDTO[]> {
-    
-  // }
+  async getUserByChatIdList (ids_chat : number[] ) : Promise<UserDTO[]> {
+    const userPromise = await this._userRepository.getUserByChatIdList(ids_chat).then(usersAsPojo =>{
+      if(!!usersAsPojo) {
+        let userList : UserDTO[]
+        console.log(usersAsPojo)
+        usersAsPojo.forEach(userAsPojo => {
+          userList.push(this.parsePojoIntoDTO(userAsPojo))
+          })        
+        return userList
+      }
+      else
+          return undefined 
+      }) .catch(error=>{
+          console.log(error)
+          throw error
+    })
+    return userPromise
+  }
 
   parsePojoIntoDTO(userPojo: UserPojo): UserDTO {
     const rolDTO: RolDTO = {
@@ -123,8 +139,8 @@ export class UserService {
     return userDTO;
   }
 
-  parsePojoIntoChatDtos(userPojo: UserPojo): ChatDTO[] {
-    const chats : ChatPojo[] = userPojo.dataValues.chats
+  parsePojoIntoChatDtos(chatPojo: ChatPojo): ChatDTO[] {
+    const chats : ChatPojo[] = chatPojo.dataValues.chats
     let chatDtos : ChatDTO[] = []
     if(!!chats && chats.length > 0) {
       chats.forEach(chatPojo => {
@@ -141,9 +157,14 @@ export class UserService {
   }
   
 
-  parseDTOIntoPojo(userDTO: UserDTO): UserPojo {
+  parseDTOIntoPojo(userDTO: NewUserDTO): UserPojo {
 
     return userDTO as unknown as UserPojo;
+  }
+
+  parseChatDTOIntoPojo(chatDTO: NewChatDTO): ChatPojo {
+
+    return chatDTO as unknown as ChatPojo;
   }
 }
 
