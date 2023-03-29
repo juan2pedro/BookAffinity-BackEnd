@@ -1,5 +1,6 @@
 import express from "express";
 import bookRouter from './routes/book.router'
+import userRoutes from './routes/user.routes'
 
 const app = express()
 const cors = require('cors')

@@ -2,12 +2,12 @@ import { Sequelize } from "sequelize-typescript";
 import { AuthorPojo } from "../models/author.model";
 import propertiesReader from 'properties-reader'
 
-var properties = propertiesReader('./src/db_config.properties')
-
-const USERNAME = properties.get('username');
-const PASSWORD = properties.get('password');
-
 export const connect = () => {
+    var properties = propertiesReader('./src/db_config.properties')
+
+    const USERNAME = properties.get('username');
+    const PASSWORD = properties.get('password');
+
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'

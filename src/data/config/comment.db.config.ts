@@ -1,13 +1,14 @@
 import { Sequelize } from "sequelize-typescript";
 import { CommentPojo } from "../models/comment.model";
-import propertiesreader from 'properties-reader'
-
-var properties = propertiesreader('./src/db_config.properties');
-
-const USERNAME = properties.get('username');
-const PASSWORD = properties.get('password');
+import propertiesReader from 'properties-reader'
+import { ImgCommentPojo } from "../models/img-comment.model";
 
 export const connect = () => {
+    var properties = propertiesReader('./src/db_config.properties')
+
+    const USERNAME = properties.get('username');
+    const PASSWORD = properties.get('password');
+
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
@@ -30,7 +31,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([CommentPojo])
+    sequelize.addModels([CommentPojo, ImgCommentPojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize
