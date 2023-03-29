@@ -1,6 +1,5 @@
-import { Table, Column, Model } from "sequelize-typescript";
-import { STRING, NUMBER } from "sequelize";
-import { ForeignKey, BelongsTo } from "sequelize-typescript";
+import { NUMBER, STRING } from "sequelize";
+import { BelongsTo, Column, ForeignKey, Model, Table } from "sequelize-typescript";
 import { CopyPojo } from './copy.model';
 
 @Table({
@@ -26,9 +25,12 @@ export class ImgCopyPojo extends Model {
   rute: string;
 
   @ForeignKey(() => CopyPojo)
-  @Column
+  @Column({
+    type: NUMBER,
+    field: "id_copy"
+  })
   id_copy: number;
 
   @BelongsTo(() => CopyPojo)
-  copy: CopyPojo;
+  copy: CopyPojo
 }

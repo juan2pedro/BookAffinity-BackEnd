@@ -1,5 +1,7 @@
+import { ImgCopyPojo } from './../models/img-copy.model';
+import { MessagePojo } from './../models/message.model';
+import { ChatPojo } from './../models/chat.model';
 import { Sequelize } from "sequelize-typescript";
-import { ChatPojo } from "../models/chat.model";
 import { CopyPojo } from "../models/copy.model";
 import { InvoicePojo } from "../models/invoice.model";
 import { RolPojo } from "../models/rol.model";
@@ -30,7 +32,8 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([CopyPojo, InvoicePojo, UserPojo, RolPojo, ChatPojo, ImgCopyPojo, MessagePojo])
+    sequelize.addModels([CopyPojo, InvoicePojo, UserPojo, RolPojo, ChatPojo, MessagePojo, ImgCopyPojo])
+
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize
