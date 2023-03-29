@@ -1,5 +1,9 @@
 import express from "express";
-import userRoutes from "./routes/user.routes";
+
+import bookRouter from './routes/book.router'
+import userRoutes from './routes/user.routes'
+import copyRouter from "./routes/copy.routes";
+
 
 const app = express()
 const cors = require('cors')
@@ -14,11 +18,14 @@ app.get("/ping", (_req, res) => {
   res.send("Pong")
 });
 
+app.use('/api/book',bookRouter)
 app.use('/api/user', userRoutes)
 app.use('/api/chat', userRoutes)
 app.use('/api/message', userRoutes)
-
+app.use('/api/copy', copyRouter)
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
 });
+
+app.use('/api/copies', copyRouter);

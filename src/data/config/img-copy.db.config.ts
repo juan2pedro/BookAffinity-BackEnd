@@ -1,19 +1,13 @@
 import { Sequelize } from "sequelize-typescript";
-import { RolPojo } from "../models/rol.model";
-import propertiesReader from 'properties-reader'
+import { ImgCopyPojo } from "../models/img-copy.model";
 
 export const connect = () => {
-    var properties = propertiesReader('./src/db_config.properties')
-    
-    const USERNAME = properties.get('username');
-    const PASSWORD = properties.get('password');
-    
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = USERNAME
-    const DB_PASSWORD = PASSWORD
-    const DB_SCHEMA = 'BookAffinity'
+    const DB_USERNAME = 'Admin'
+    const DB_PASSWORD = 'admin'
+    const DB_SCHEMA = 'Bookaffinity'
     const DB_DIALECT : any = 'postgres'
 
     const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
@@ -30,9 +24,9 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([RolPojo])
+    sequelize.addModels([ImgCopyPojo])
     const db : any = {}
-    db.Sequelize = sequelize
+    db.Sequelize = Sequelize
     db.sequelize = sequelize
 
     return db
