@@ -1,5 +1,5 @@
 import { ImgCopyPojo } from "../models/img-copy.model";
-import { connect } from "../config/copy.db.config";
+import { connect } from "../config/img-copy.db.config";
 
 export class ImgCopyRepository {
   _db: any = {};
