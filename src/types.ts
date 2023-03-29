@@ -79,10 +79,14 @@ export class UserDTO {
     updatedAt?: Date
 }
 
+export type ChatUserDTO = Omit<UserDTO, 'pass'>
+
 export class ChatDTO {
     id_chat: number
     id_user1:number
     id_user2:number
+    user1? : ChatUserDTO
+    user2? : ChatUserDTO
 }
 
 

@@ -7,12 +7,6 @@ var properties = propertiesreader('./src/db_config.properties');
 const USERNAME = properties.get('username');
 const PASSWORD = properties.get('password');
 
-var propertiesReader = require('properties-reader');
-var properties = propertiesReader('/src/db_config.properties');
-
-const USERNAME = properties.get('username');
-const PASSWORD = properties.get('password');
-
 export const connect = () => {
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432

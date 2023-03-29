@@ -22,7 +22,7 @@ id_message: number
     type: STRING,
     field: 'text'
 })
-isbn: string
+text: string
 
 
 @Column({

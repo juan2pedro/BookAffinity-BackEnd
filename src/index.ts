@@ -16,6 +16,8 @@ app.get("/ping", (_req, res) => {
 
 app.use('/api/user', userRoutes)
 app.use('/api/chat', userRoutes)
+app.use('/api/message', userRoutes)
+
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`)
