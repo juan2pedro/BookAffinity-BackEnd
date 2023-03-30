@@ -17,7 +17,7 @@ export const BookController = {
   getBookById: (req: any, res: any) => {
     try {
       const id_book = req.params.id;
-      bookService.getBookById(id_book).then(result => {
+      bookService.getBookById(id_book).then((result) => {
         res.json(result);
       });
     } catch (excepcion) {
@@ -38,26 +38,31 @@ export const BookController = {
     }
   },
 
-  updateBook: (req: any, res: any) => { 
-    try { const bookUpdated = req.body 
-      bookService.updateBook(bookUpdated)
-      .then((result) => { res.json(result) 
-      })
-} catch (error) { console.log(error)
-  res.sendStatus(500) } },
+  updateBook: (req: any, res: any) => {
+    try {
+      const bookUpdated = req.body;
+      bookService.updateBook(bookUpdated).then((result) => {
+        res.json(result);
+      });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  },
 
-changeStatusBook: (req: any, res: any) => {
-  try {
-    const newBook = req.body;
-    bookService.updateBook(newBook).then((result) => {
-      res.json(result);
-    });
-  } catch (excepcion) {
-    console.log(excepcion);
-    res.sendStatus(500);
-  }
-},
-  deleteBook : (req: any, res: any) => {
+  changeStatusBook: (req: any, res: any) => {
+    try {
+      const newBook = req.body;
+      bookService.updateBook(newBook).then((result) => {
+        res.json(result);
+      });
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
+
+  deleteBook: (req: any, res: any) => {
     try {
       const id_book = req.params.id;
       bookService.deleteBook(id_book).then((result) => {
@@ -67,6 +72,17 @@ changeStatusBook: (req: any, res: any) => {
       console.log(excepcion);
       res.sendStatus(500);
     }
-  }
-  
+  },
+
+  getAllAuthors: (_req: any, res: any) => {
+    bookService
+      .getAllAuthors()
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((excepcion) => {
+        console.error(excepcion);
+        res.send(500);
+      });
+  },
 };

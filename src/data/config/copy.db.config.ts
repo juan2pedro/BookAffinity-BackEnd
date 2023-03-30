@@ -7,21 +7,21 @@ import { InvoicePojo } from "../models/invoice.model";
 import { RolPojo } from "../models/rol.model";
 import { UserPojo } from "../models/user.model";
 
-
 export const connect = () => {
-    const DB_HOSTNAME = 'localhost'
-    const DB_PORT = 5432
+    
+    const HOST = !(process.env.DB_HOST == null) ? process.env.DB_HOST : 'localhost'
+    const PORT = !(process.env.DB_PORT == null) ? process.env.DB_PORT : 5432
+    const DB_USERNAME = !(process.env.DB_USER == null) ? process.env.DB_USER : 'postgres'
+    const DB_PASSWORD = !(process.env.DB_PASSWORD == null) ? process.env.DB_PASSWORD : 'postgres'
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = 'Admin'
-    const DB_PASSWORD = 'admin'
-    const DB_SCHEMA = 'Bookaffinity'
+    const DB_SCHEMA = 'BookAffinity'
     const DB_DIALECT : any = 'postgres'
 
     const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-        host: DB_HOSTNAME,
+        host: HOST,
         dialect: DB_DIALECT,
         schema: DB_SCHEMA,
-        port: DB_PORT,
+        port: +PORT,
         repositoryMode: true,
         pool: {
             max: 10,
