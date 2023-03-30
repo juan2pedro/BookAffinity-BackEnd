@@ -5,7 +5,6 @@ import userRoutes from './routes/user.routes'
 import copyRouter from "./routes/copy.routes";
 
 
-
 const app = express()
 const cors = require('cors')
 const PORT = 5000
@@ -22,6 +21,9 @@ app.get("/ping", (_req, res) => {
 app.use('/api/book',bookRouter)
 app.use('/api/user', userRoutes)
 app.use('/api/chat', userRoutes)
+app.use('/api/message', userRoutes)
+app.use('/api/copy', copyRouter)
+
 
 app.listen(PORT, () => {
   console.log(`########Servidor escuchando en el puerto ${PORT}#######`)
