@@ -7,6 +7,7 @@ import { InvoicePojo } from "../models/invoice.model";
 import { RolPojo } from "../models/rol.model";
 import { UserPojo } from "../models/user.model";
 
+
 export const connect = () => {
     
     const HOST = !(process.env.DB_HOST == null) ? process.env.DB_HOST : 'localhost'

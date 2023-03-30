@@ -34,6 +34,12 @@ pass: string;
 
 @Column({
     type: STRING,
+    field: "picture",
+})
+picture: string;
+
+@Column({
+    type: STRING,
     field: "email",
 })
 email: string;
