@@ -88,6 +88,8 @@ export class UserDTO {
   updatedAt?: Date
 }
 
+
+
 export type NewUserDTO = Omit<UserDTO, 'id_user'>
 export type NewBookDTO = Omit<BookDTO, 'id_book'>
 export type NewChatDTO = Omit<ChatDTO, 'id_chat'>

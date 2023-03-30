@@ -52,5 +52,19 @@ export const copyController = {
       console.error(exception);
       res.sendStatus(500);
     }
-  }
+  },
+  createInvoice: (req: any, res: any) => {
+    try {
+      //El try catch es para gestionar que el req.body pueda estar mal y provoque un bad request.
+      const newInvoice = req.body;
+      //no puedo usar async await, porque eso paraliza la ejecución del front, es mejor usar .then()
+      copyService.createInvoice(newInvoice).then((result) => {
+        console.log(result);
+        res.json(result);
+      });
+    } catch (exception) {
+      console.error(exception);
+      res.sendStatus(500);
+    }
+  },
 };
