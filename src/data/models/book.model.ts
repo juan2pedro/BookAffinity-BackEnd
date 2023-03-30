@@ -55,7 +55,7 @@ export class BookPojo extends Model {
   status: number
 
   @BelongsToMany(() => CategoryPojo, () => BookCategoriesPojo)
-  category: CategoryPojo[];
+  categories: CategoryPojo[];
 
   @HasMany(() => ImgBookPojo)
   imgBook: ImgBookPojo[];
@@ -64,7 +64,10 @@ export class BookPojo extends Model {
   comment: CommentPojo[];
 
   @ForeignKey(() => AuthorPojo)
-  @Column
+  @Column({
+    type: NUMBER,
+    field: 'id_author'
+  })
   id_author: number;
 
   @BelongsTo(() => AuthorPojo)

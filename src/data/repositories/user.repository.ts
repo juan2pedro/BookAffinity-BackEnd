@@ -79,7 +79,6 @@ constructor() {
             return -1
         }
     }
-
     async getUserByChatIdList(id_chats : number[]) : Promise<UserPojo[] | undefined>{
         try {
             return await this._userRepository.findOne({

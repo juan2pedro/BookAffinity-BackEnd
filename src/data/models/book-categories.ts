@@ -20,11 +20,13 @@ export class BookCategoriesPojo extends Model {
   })
   id_book_categories: number
 
+  @ForeignKey(() => CategoryPojo)
+  @Column
+  id_category: number;
+  
   @ForeignKey(() => BookPojo)
   @Column
   id_book: number;
 
-  @ForeignKey(() => CategoryPojo)
-  @Column
-  id_category: number;
+  
 }
