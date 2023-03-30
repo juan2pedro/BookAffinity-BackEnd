@@ -32,10 +32,33 @@ constructor() {
     }
     async getAllUsers(): Promise <UserPojo[]>{
         try {
-            return await this._userRepository.findAll()
+            return await this._userRepository.findAll({ include : [this._rolRepository] })
         } catch (error){
             console.error(error)
             return []
+        }
+    }
+    async updateUser(newUser: UserPojo): Promise<number> {
+        try {
+        await this._userRepository.update({
+            name: newUser.name,
+            pass: newUser.pass,
+            picture: newUser.picture,
+            email: newUser.email,
+            status: newUser.status,
+            id_rol : newUser.id_rol,
+            createdAt : newUser.createdAt,
+            updatedAt : newUser.updatedAt,
+
+        }, {
+            where: {
+            id_user: newUser.id_user
+            },
+        });
+        return newUser.id_user;
+        } catch (error) {
+        console.error(error);
+        return error.toString();
         }
     }
     async getUserbyId(id:number) : Promise<UserPojo | undefined>{

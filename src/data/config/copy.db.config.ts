@@ -6,13 +6,19 @@ import { CopyPojo } from "../models/copy.model";
 import { InvoicePojo } from "../models/invoice.model";
 import { RolPojo } from "../models/rol.model";
 import { UserPojo } from "../models/user.model";
+import propertiesReader from 'properties-reader'
+
 
 export const connect = () => {
+    var properties = propertiesReader('./src/db_config.properties')
+    
+    const USERNAME = properties.get('username');
+    const PASSWORD = properties.get('password');
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = 'Admin'
-    const DB_PASSWORD = 'admin'
+    const DB_USERNAME = USERNAME
+    const DB_PASSWORD = PASSWORD
     const DB_SCHEMA = 'Bookaffinity'
     const DB_DIALECT : any = 'postgres'
 

@@ -137,6 +137,19 @@ export class UserService {
     })
     return chatPromise
   }
+  async updateUser(user: UserDTO): Promise<number> {
+    const userPojo: UserPojo = this.parseDTOIntoPojo(user);
+    const userPromise = await this._userRepository
+      .updateUser(userPojo)
+      .then((id_copy) => {
+        return id_copy;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return userPromise;
+  }
 
   async getUserByChatIdList (ids_chat : number[] ) : Promise<UserDTO[]> {
     const userPromise = await this._userRepository.getUserByChatIdList(ids_chat).then(usersAsPojo =>{
