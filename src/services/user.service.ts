@@ -74,8 +74,8 @@ export class UserService {
     const userPojo: UserPojo = this.parseDTOIntoPojo(user);
     const userPromise = await this._userRepository
       .addUser(userPojo)
-      .then((user_id) => {
-        return user_id;
+      .then((id_user) => {
+        return id_user;
       })
       .catch((error) => {
         console.error(error);

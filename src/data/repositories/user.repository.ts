@@ -1,7 +1,6 @@
 import { RolPojo } from './../models/rol.model';
 import { UserPojo } from "../models/user.model";
 import { connect } from "../config/user.db.config";
-import { v4 as uuid } from 'uuid'
 
 export class UserRepository {
 _db: any = {};
@@ -49,9 +48,8 @@ async getUserbyId(id:number) : Promise<UserPojo | undefined>{
 
 async addUser (newUser: UserPojo) : Promise<number>{
     try{
-        newUser.user_id = uuid()
         newUser= await this._userRepository.create(newUser)
-        return newUser.id
+        return newUser.id_user
     } catch (error) {
         console.log(error)
         return -1

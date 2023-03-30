@@ -16,7 +16,7 @@ export const BookController = {
 
   getBookById: (req: any, res: any) => {
     try {
-      const id_book = req.params.id;
+      const id_book = req.params.id_book;
       bookService.getBookById(id_book).then(result => {
         res.json(result);
       });
@@ -38,28 +38,21 @@ export const BookController = {
     }
   },
 
-  updateBook: (req: any, res: any) => { 
-    try { const bookUpdated = req.body 
-      bookService.updateBook(bookUpdated)
-      .then((result) => { res.json(result) 
-      })
-} catch (error) { console.log(error)
-  res.sendStatus(500) } },
-
-changeStatusBook: (req: any, res: any) => {
-  try {
-    const newBook = req.body;
-    bookService.updateBook(newBook).then((result) => {
-      res.json(result);
-    });
-  } catch (excepcion) {
-    console.log(excepcion);
-    res.sendStatus(500);
-  }
-},
-  deleteBook : (req: any, res: any) => {
+  updateBook: (req: any, res: any) => {
     try {
-      const id_book = req.params.id;
+      const bookUpdated = req.body
+      bookService.updateBook(bookUpdated)
+        .then((result) => {
+          res.json(result)
+        })
+    } catch (error) {
+      console.log(error)
+      res.sendStatus(500)
+    }
+  },
+  deleteBook: (req: any, res: any) => {
+    try {
+      const id_book = req.params.id_book;
       bookService.deleteBook(id_book).then((result) => {
         res.json(result);
       });
@@ -68,5 +61,5 @@ changeStatusBook: (req: any, res: any) => {
       res.sendStatus(500);
     }
   }
-  
+
 };

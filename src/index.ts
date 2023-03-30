@@ -20,5 +20,5 @@ app.use('/api/user', userRoutes)
 app.use('/api/chat', userRoutes)
 
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`)
+  console.log(`########Servidor escuchando en el puerto ${PORT}#######`)
 });
