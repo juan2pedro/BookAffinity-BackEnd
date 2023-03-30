@@ -12,7 +12,5 @@ router.post('/get/by-list', userController.getUserByChatIdList)
 router.get('/get/:id', userController.getMessagebyChatId)
 router.get('/get/:id', userController.getChatbyUserId)
 
-
-
 export default router
 module.exports = router

@@ -43,20 +43,22 @@ export const BookController = {
       bookService.updateBook(bookUpdated)
       .then((result) => { res.json(result) 
       })
-} catch (error) { console.log(error)
-  res.sendStatus(500) } },
+  } catch (error) { console.log(error)
+  res.sendStatus(500) }
+  },
 
-changeStatusBook: (req: any, res: any) => {
-  try {
-    const newBook = req.body;
-    bookService.updateBook(newBook).then((result) => {
-      res.json(result);
-    });
-  } catch (excepcion) {
-    console.log(excepcion);
-    res.sendStatus(500);
-  }
-},
+  changeStatusBook: (req: any, res: any) => {
+    try {
+      const newBook = req.body;
+      bookService.updateBook(newBook).then((result) => {
+        res.json(result);
+      });
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
+
   deleteBook : (req: any, res: any) => {
     try {
       const id_book = req.params.id;
