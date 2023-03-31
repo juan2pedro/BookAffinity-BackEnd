@@ -69,12 +69,13 @@ export class UserService {
       });
     return userPromise;
   }
+
   async addMessage(message: NewMessageDTO): Promise<number> {
     const messagePojo: MessagePojo = this.parseDTOIntoMessagePojo(message);
     const messagePromise = await this._messageRepository
       .addMessage(messagePojo)
-      .then((message_id) => {
-        return message_id;
+      .then((id_message) => {
+        return id_message;
       })
       .catch((error) => {
         console.error(error);
@@ -82,6 +83,7 @@ export class UserService {
       });
     return messagePromise;
   }
+
   async getUserbyId (id:number) : Promise<UserDTO | undefined>{
     const userPromise = await this._userRepository.getUserbyId(id).then(userAsPojo =>{
         if(!!userAsPojo) {
@@ -96,6 +98,7 @@ export class UserService {
     })
     return userPromise
   }
+
   async getMessagebyChatId(id_chat:number): Promise<MessageDTO[]> {
     const messagesPromise = await this._messageRepository
       .getMessagebyChatId(id_chat)
@@ -176,7 +179,7 @@ export class UserService {
       name: userPojo.dataValues.rol?.dataValues.name
     }
     const userDTO: UserDTO = {
-      id_user: userPojo.dataValues.user_id,
+      id_user: userPojo.dataValues.id_user,
       name: userPojo.dataValues.name,
       pass: userPojo.dataValues.pass,
       picture: userPojo.dataValues.picture,
@@ -203,7 +206,7 @@ export class UserService {
 
   parseUserPojoFromChatPojoToUserDto(userPojo: UserPojo) : ChatUserDTO {
     let userDto : ChatUserDTO = {
-      id_user: userPojo.dataValues.user_id,
+      id_user: userPojo.dataValues.id_user,
       name: userPojo.dataValues.name,
       picture: userPojo.dataValues.picture,
       email: userPojo.dataValues.email,

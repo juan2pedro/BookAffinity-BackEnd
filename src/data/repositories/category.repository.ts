@@ -1,5 +1,5 @@
 import { CategoryPojo } from "../models/category.model";
-import { connect } from "../config/author.db.config";
+import { connect } from "../config/category.db.config";
 
 export class CategoryRepository {
   _db: any = {};

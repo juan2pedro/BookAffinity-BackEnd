@@ -4,14 +4,13 @@ import express from 'express'
 const router = express.Router()
 
 router.get('/get/:email/:pass', userController.getUserbyEmailAndPassword)
-router.post('/add', userController.addUser)
-router.put('/update', userController.updateUser)
-router.post('/add', userController.addMessage)
-router.get('/all', userController.getAllUsers)
-router.get('/get/:id', userController.getUserById)
-router.post('/get/by-list', userController.getUserByChatIdList)
-router.get('/get/:id', userController.getMessagebyChatId)
-router.get('/get/:id', userController.getChatbyUserId)
+router.post('/add/user', userController.addUser)
+router.post('/add/message', userController.addMessage)
+router.get('/get/all', userController.getAllUsers)                          // Funciona
+router.get('/get/user/:id', userController.getUserById)                     // Funciona
+router.post('/get/user/by-list', userController.getUserByChatIdList)        // No comprobado
+router.get('/get/message/:id', userController.getMessagebyChatId)
+router.get('/get/chat/:id', userController.getChatbyUserId)
 
 export default router
 module.exports = router

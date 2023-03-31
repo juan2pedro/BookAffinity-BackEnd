@@ -1,5 +1,5 @@
 import { CommentPojo } from "../models/comment.model";
-import { connect } from "../config/author.db.config";
+import { connect } from "../config/comment.db.config";
 
 export class CommentRepository {
   _db: any = {};

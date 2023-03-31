@@ -1,5 +1,5 @@
 import { ImgBookPojo } from "../models/img-book.model";
-import { connect } from "../config/author.db.config";
+import { connect } from "../config/img-book.db.config";
 
 export class ImgBookRepository {
   _db: any = {};
