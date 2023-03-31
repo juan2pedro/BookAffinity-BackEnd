@@ -18,16 +18,13 @@ export class UserService {
     this._messageRepository = new MessageRepository();
   }
 
-  async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserDTO[]> {
+  async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserDTO> {
     const usersPromise = await this._userRepository
       .getUserbyEmailAndPassword(email, pass)
-      .then((usersAsPojo) => {
-        let usersAsDTO: UserDTO[] = [];
-        usersAsPojo.forEach((userAsPojo) => {
+      .then((userAsPojo) => {
           let userAsDTO = this.parsePojoIntoDTO(userAsPojo);
-          usersAsDTO.push(userAsDTO);
-        });
-        return usersAsDTO;
+
+        return userAsDTO;
       })
       .catch((error) => {
         console.error(error);
