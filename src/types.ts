@@ -8,11 +8,15 @@ export class BookDTO {
   summary?: string;
   isbn: number;
   id_author?: number;
+  author?: AuthorDTO;
   language?: number;
+  categories?: CategoryDTO[];
+  category?: CategoryDTO;
 }
 export class BookCategoriesDTO {
   id_book_categories: number;
   id_category: number;
+  category? : CategoryDTO;
   id_book: number;
 }
 export class CategoryDTO {
@@ -87,6 +91,8 @@ export class UserDTO {
   createdAt?: Date
   updatedAt?: Date
 }
+
+
 
 export type NewUserDTO = Omit<UserDTO, 'id_user'>
 export type NewBookDTO = Omit<BookDTO, 'id_book'>

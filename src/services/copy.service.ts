@@ -1,7 +1,8 @@
 import { ImgCopyRepository } from './../data/repositories/img-copy.repository';
-import { CopyDTO, NewCopyDTO } from "../types";
+import { CopyDTO, NewCopyDTO, NewInvoiceDTO } from "../types";
 import { CopyRepository } from "../data/repositories/copy.repository";
 import { CopyPojo } from "../data/models/copy.model";
+import { InvoicePojo } from '../data/models/invoice.model';
 
 export class CopyService {
   _copyRepository: CopyRepository;
@@ -97,5 +98,24 @@ export class CopyService {
         throw error;
       });
     return copyPromise;
+  }
+
+  async createInvoice(invoice: NewInvoiceDTO): Promise<number> {
+    const invoicePojo: InvoicePojo = this.parseNewInvoiceDtoIntoPojo(invoice);
+    const invoicePromise = await this._copyRepository
+      .createInvoice(invoicePojo)
+      .then((id_invoice) => {
+        return id_invoice;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return invoicePromise;
+  }
+  
+
+  parseNewInvoiceDtoIntoPojo(invoiceDto: NewInvoiceDTO): InvoicePojo {
+    return invoiceDto as InvoicePojo;
   }
 }

@@ -1,6 +1,7 @@
-import { BookRepository } from "../data/repositories/book.repository";
 import { BookPojo } from "../data/models/book.model";
-import { BookDTO} from "../types";
+import { CategoryPojo } from "../data/models/category.model";
+import { BookRepository } from "../data/repositories/book.repository";
+import { AuthorDTO, BookDTO, CategoryDTO } from "../types";
 
 export class BookService {
   _bookRepository: BookRepository;
@@ -31,6 +32,7 @@ export class BookService {
     const bookPromise = await this._bookRepository
       .getBookById(id_book)
       .then((bookAsPojo) => {
+        console.log(bookAsPojo);
         if (!!bookAsPojo) {
           return this.parsePojoIntoDTO(bookAsPojo);
         } else return undefined;
@@ -72,7 +74,7 @@ export class BookService {
   async updateBook(bookUpdated: BookDTO): Promise<number> {
     const bookPojo: BookPojo = this.parseDTOIntoPojo(bookUpdated)
     const bookPromise = await this._bookRepository.
-      updateBook(bookPojo).then(bookId => { return bookId })
+      updateBook(bookPojo).then(id_book=> { return id_book })
       .catch(error => {
         console.error(error);
         throw error
@@ -81,26 +83,36 @@ export class BookService {
   }
 
   parsePojoIntoDTO(bookPojo: BookPojo): BookDTO {
+    const authorDTO : AuthorDTO ={
+      id_author: bookPojo.dataValues.author?.dataValues.id_author,
+      name_author: bookPojo.dataValues.author?.dataValues.name_author,
+    }
+    
     const bookDTO: BookDTO = {
       id_book: bookPojo.dataValues.id_book,
       name: bookPojo.dataValues.name,
       summary: bookPojo.dataValues.summary,
       isbn: bookPojo.dataValues.isbn,
       id_author: bookPojo.dataValues.id_author,
+      author :authorDTO,
       language: bookPojo.dataValues.language,
+      categories: []
     };
+
+    if(!!bookPojo.dataValues.categories && bookPojo.dataValues.categories.length > 0){
+      bookPojo.dataValues.categories.forEach((category: CategoryPojo) => {  
+        const categoryDTO : CategoryDTO ={
+          id_category: category.dataValues.id_category,
+          name_category: category.dataValues.name_category,
+        }
+        bookDTO.categories.push(categoryDTO)
+      })
+    }
 
     return bookDTO;
   }
 
   parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {
-    let bookPojo = new BookPojo()
-    bookPojo.setDataValue("id_book", null)
-    bookPojo.setDataValue("name", bookDTO.name)
-    bookPojo.setDataValue("summary", bookDTO.summary)
-    bookPojo.setDataValue("isbn", bookDTO.isbn)
-    bookPojo.setDataValue("id_author", bookDTO.id_author)
-    bookPojo.setDataValue("language", bookDTO.language)
-    return bookDTO as BookPojo;
+    return bookDTO as unknown as BookPojo;
   }
 }
