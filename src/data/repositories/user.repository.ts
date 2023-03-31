@@ -20,7 +20,7 @@ export class UserRepository {
             const user = await this._userRepository.findOne({
                 where: {
                     email: email,
-                    password: password
+                    pass: password
                 }
             });
             console.log("user:::", user);
