@@ -3,6 +3,8 @@ const userService: UserService = new UserService();
 
 export const userController = {
   getUserbyEmailAndPassword: (req: any, res: any) => {
+    console.log("################################")
+    console.log(req.body.email)
     const email = req.body.email
     const pass = req.body.pass
     userService
