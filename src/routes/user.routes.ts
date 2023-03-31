@@ -8,6 +8,5 @@ router.post('/add', userController.addUser)
 router.get('/all', userController.getAllUsers)
 router.get('/get/:id', userController.getUserById)
 
-
 export default router
 module.exports = router

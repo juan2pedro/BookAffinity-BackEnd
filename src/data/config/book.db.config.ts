@@ -6,7 +6,6 @@ import { BookCategoriesPojo } from "../models/book-categories";
 import { AuthorPojo } from "../models/author.model";
 import { ImgBookPojo } from "../models/img-book.model";
 import { CommentPojo } from "../models/comment.model";
-//import { ImgCommentDTO } from "../../types";
 import { ImgCommentPojo } from "../models/img-comment.model";
 
 export const connect = () => {

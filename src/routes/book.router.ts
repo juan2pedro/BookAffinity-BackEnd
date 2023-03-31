@@ -11,7 +11,6 @@ router.get('/all',BookController.getAllBooks)
 router.post('/add',BookController.addBook)
 router.get('/id/:id_book',BookController.getBookById)
 router.put('/update/:id_book',BookController.updateBook)
-//router.post('/status/:id_book',BookController.changeStatusBook)
 router.delete('/delete/:id_book',BookController.deleteBook) // Necesita verificarse que está como no visible para poder borrarlo
 //Comments
 // router.get('/all',CommentsController.getAllComments)

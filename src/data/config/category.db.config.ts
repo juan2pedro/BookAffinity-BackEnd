@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { CategoryPojo } from "../models/category.model";
 import propertiesreader from 'properties-reader'
-import { BookCategoriesPojo } from "../models/book-categories";
 
 export const connect = () => {
     
@@ -32,7 +31,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([CategoryPojo, BookCategoriesPojo])
+    sequelize.addModels([CategoryPojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize

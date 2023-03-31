@@ -1,5 +1,5 @@
 import { CategoryPojo } from "../models/category.model";
-import { connect } from "../config/author.db.config";
+import { connect } from "../config/category.db.config";
 
 export class CategoryRepository {
   _db: any = {};
@@ -10,7 +10,7 @@ export class CategoryRepository {
     this._categoryRepository = this._db.sequelize.getRepository(CategoryPojo);
   }
 
-  async getAllCategories(): Promise<CategoryPojo[]> {
+  async getAllCategorys(): Promise<CategoryPojo[]> {
     try {
       const category = await this._categoryRepository.findAll();
       console.log("category:::", category);
