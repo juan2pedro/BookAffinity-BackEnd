@@ -1,14 +1,15 @@
-import { BookController } from './../controllers/book.controller';
-
-import express from 'express'
+import { BookController } from "../controllers/book.controller";
+import express from "express"
 
 const router = express.Router()
 
-router.get('/all', BookController.getAllBooks)
-router.get('/id/:id_book',BookController.getBookById)
-router.post('/add',BookController.addBook)
-router.put('/update',BookController.updateBook)
-router.delete('/delete/:id_book',BookController.deleteBook)
+router.get('/get/book/all',BookController.getAllBooks)                   // Funciona
+router.get('/get/author/all',BookController.getAllAuthors)               // Funciona
+router.post('/add',BookController.addBook)                               // Fallo de ejecución
+router.get('/get/:id_book',BookController.getBookById)                   // Fallo de ejecución
+router.put('/update/:id_book',BookController.updateBook)                 // Fallo de ejecución
+router.post('/status/:id_book',BookController.changeStatusBook)          // No comprobado
+router.delete('/delete/:id_book',BookController.deleteBook)              // Necesita verificarse que está como no visible para poder borrarlo
 
 export default router
 module.exports = router

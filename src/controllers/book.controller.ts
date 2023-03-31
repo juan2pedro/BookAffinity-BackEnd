@@ -40,16 +40,28 @@ export const BookController = {
 
   updateBook: (req: any, res: any) => {
     try {
-      const bookUpdated = req.body
-      bookService.updateBook(bookUpdated)
-        .then((result) => {
-          res.json(result)
-        })
+      const bookUpdated = req.body;
+      bookService.updateBook(bookUpdated).then((result) => {
+        res.json(result);
+      });
     } catch (error) {
-      console.log(error)
-      res.sendStatus(500)
+      console.log(error);
+      res.sendStatus(500);
     }
   },
+
+  changeStatusBook: (req: any, res: any) => {
+    try {
+      const newBook = req.body;
+      bookService.updateBook(newBook).then((result) => {
+        res.json(result);
+      });
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
+
   deleteBook: (req: any, res: any) => {
     try {
       const id_book = req.params.id_book;
@@ -60,6 +72,17 @@ export const BookController = {
       console.log(excepcion);
       res.sendStatus(500);
     }
-  }
+  },
 
+  getAllAuthors: (_req: any, res: any) => {
+    bookService
+      .getAllAuthors()
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((excepcion) => {
+        console.error(excepcion);
+        res.send(500);
+      });
+  },
 };

@@ -3,6 +3,7 @@ import { UserPojo } from "../models/user.model";
 import { connect } from "../config/chat.db.config";
 import { Op } from 'sequelize';
 
+
 export class ChatRepository {
 _db: any = {};
 _userRepository: any;

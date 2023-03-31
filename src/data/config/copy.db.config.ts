@@ -6,27 +6,23 @@ import { CopyPojo } from "../models/copy.model";
 import { InvoicePojo } from "../models/invoice.model";
 import { RolPojo } from "../models/rol.model";
 import { UserPojo } from "../models/user.model";
-import propertiesReader from 'properties-reader'
 
 
 export const connect = () => {
-    var properties = propertiesReader('./src/db_config.properties')
     
-    const USERNAME = properties.get('username');
-    const PASSWORD = properties.get('password');
-    const DB_HOSTNAME = 'localhost'
-    const DB_PORT = 5432
+    const HOST = !(process.env.DB_HOST == null) ? process.env.DB_HOST : 'localhost'
+    const PORT = !(process.env.DB_PORT == null) ? process.env.DB_PORT : 5432
+    const DB_USERNAME = !(process.env.DB_USER == null) ? process.env.DB_USER : 'postgres'
+    const DB_PASSWORD = !(process.env.DB_PASSWORD == null) ? process.env.DB_PASSWORD : 'postgres'
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = USERNAME
-    const DB_PASSWORD = PASSWORD
-    const DB_SCHEMA = 'Bookaffinity'
+    const DB_SCHEMA = 'BookAffinity'
     const DB_DIALECT : any = 'postgres'
 
     const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-        host: DB_HOSTNAME,
+        host: HOST,
         dialect: DB_DIALECT,
         schema: DB_SCHEMA,
-        port: DB_PORT,
+        port: +PORT,
         repositoryMode: true,
         pool: {
             max: 10,
@@ -37,6 +33,7 @@ export const connect = () => {
     })
 
     sequelize.addModels([CopyPojo, InvoicePojo, UserPojo, RolPojo, ChatPojo, MessagePojo, ImgCopyPojo])
+
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize

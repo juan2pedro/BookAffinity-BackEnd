@@ -23,8 +23,20 @@ SET row_security = off;
 -- Name: BookAffinity_db; Type: DATABASE; Schema: -; Owner: admin
 --
 
-CREATE DATABASE "BookAffinity_db" WITH TEMPLATE = template0 ENCODING = 'UTF8';
+-- COMENTADO PARA HACER PRUEBAS (DESCOMENTAR AL IMPLANTAR DOCKER)
+SELECT 'CREATE DATABASE "BookAffinity_db" WITH TEMPLATE = template0 ENCODING = "UTF8";'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'BookAffinity_db')\gexec
 
+CREATE ROLE admin WITH
+  LOGIN
+  SUPERUSER
+  INHERIT
+  CREATEDB
+  CREATEROLE
+  REPLICATION
+  ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:LHcQUFjhQwf27lOJjluILg==$7HEOtl27HY9EkQFPBbBbeFsGDl7aNOpBgbiWBC4aiFI=:hTvC8H7SGnIGhe03b22UDvwN5SoJP5J0CrmDY+/cLTE=';
+
+GRANT pg_read_all_data, pg_write_all_data TO admin WITH ADMIN OPTION;
 
 ALTER DATABASE "BookAffinity_db" OWNER TO admin;
 
@@ -752,8 +764,8 @@ CREATE TABLE "BookAffinity"."user" (
     email character varying(100) NOT NULL,
     status smallint NOT NULL,
     id_rol smallint NOT NULL,
-    "createAt" timestamp without time zone,
-    "updateAt" timestamp without time zone
+    "createdAt" timestamp without time zone,
+    "updatedAt" timestamp without time zone
 );
 
 
@@ -1138,56 +1150,56 @@ INSERT INTO "BookAffinity".chat (id_chat, id_user1, id_user2) OVERRIDING SYSTEM 
 -- Data for Name: comment; Type: TABLE DATA; Schema: BookAffinity; Owner: admin
 --
 
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (1, 2, 'Este libro es un clásico de la literatura y es imprescindible para cualquier persona interesada en el género.', 33, 8);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (2, 2, 'La trama de este libro es emocionante y me mantuvo enganchado desde el principio hasta el final.', 20, 12);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (3, 5, 'El estilo de escritura del autor es poético y evocador, y me transportó a otro mundo.', 9, 33);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (4, 5, 'No me gustó mucho este libro, ya que la trama era predecible y los personajes no eran interesantes.', 13, 5);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (5, 3, 'Este libro ofrece una perspectiva única sobre un tema importante y me dejó reflexionando durante días.', 19, 50);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (6, 1, 'Este libro me hizo reír y llorar, y me conecté emocionalmente con los personajes. ¡Fue una experiencia increíble!', 27, 44);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (7, 5, 'La prosa del autor es complicada y difícil de seguir, lo que dificultó mi comprensión del libro.', 7, 17);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (8, 3, 'Este libro es una obra maestra de la ficción, con una trama intrigante, personajes bien desarrollados y un final satisfactorio.', 1, 12);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (9, 1, 'Aunque la historia era interesante, encontré algunos errores de edición y gramática que distraían de la lectura.', 30, 42);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (10, 2, 'Este libro fue una decepción, ya que las promesas en la sinopsis no se cumplieron y la historia fue aburrida.', 31, 25);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (11, 3, 'Este libro es una obra maestra de la literatura contemporánea.', 12, 21);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (12, 1, 'Me encantó la forma en que el autor desarrolló los personajes en esta novela.', 38, 22);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (13, 3, 'No puedo dejar de pensar en las ideas y temas que se presentan en este libro.', 31, 43);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (14, 5, 'Aunque el final me dejó un poco decepcionado, la trama en general fue intrigante.', 42, 18);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (15, 3, 'La prosa de este autor es simplemente impresionante, me dejó sin palabras.', 22, 9);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (16, 2, 'Este libro me llevó a un mundo completamente nuevo y fascinante.', 10, 14);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (17, 1, 'La trama es emocionante y llena de giros inesperados que me mantuvieron enganchado hasta el final.', 6, 21);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (18, 3, 'Los personajes estaban bien desarrollados y creíbles, lo que hizo que me preocupara por su destino.', 42, 21);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (19, 3, 'La prosa del autor es hermosa y poética, lo que me hizo detenerme varias veces para reflexionar sobre sus palabras.', 22, 16);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (20, 4, 'Aunque hubo algunos momentos lentos, en general, el libro fue una experiencia increíble que no olvidaré pronto.', 45, 42);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (21, 3, 'No pude conectarme con los personajes, la trama me pareció confusa y el final decepcionante.', 35, 18);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (22, 0, 'El autor tiene una prosa hermosa y una habilidad única para crear escenas vívidas.', 47, 42);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (23, 5, 'Este libro es una obra maestra, una de las mejores que he leído en mucho tiempo.', 17, 24);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (24, 5, 'A pesar de haber sido recomendado por muchos, no pude superar el aburrimiento y abandoné la lectura a la mitad.', 35, 43);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (25, 3, 'Este libro me pareció muy entretenido y adictivo, no podía dejar de leerlo hasta terminarlo.', 19, 17);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (26, 3, 'La trama era interesante, pero la escritura y los diálogos eran un poco flojos en mi opinión.', 49, 9);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (27, 1, 'En general, disfruté mucho leyendo este libro, pero sentí que el final fue un poco apresurado y decepcionante.', 17, 44);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (28, 3, 'Me encantó este libro, fue una gran aventura y no podía dejar de leer.', 7, 19);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (29, 4, 'La prosa de este autor es increíble. Cada frase está bien construida y el lenguaje es hermoso.', 42, 49);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (30, 5, 'Sin duda, este libro es una obra maestra. Los personajes son profundos y la trama es cautivadora.', 48, 3);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (31, 2, 'Este libro tiene un mensaje poderoso que me hizo reflexionar sobre mi propia vida y las decisiones que he tomado.', 36, 25);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (32, 5, 'No me gustó este libro en absoluto. La trama fue predecible y los personajes eran planos.', 37, 47);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (33, 3, 'No entiendo por qué este libro recibió tantas críticas positivas. Me pareció aburrido y difícil de seguir.', 36, 39);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (34, 5, 'Me decepcionó este libro. La trama comenzó bien, pero el final fue una decepción total.', 38, 38);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (35, 4, 'En mi opinión, este libro no vale la pena leer. Los personajes eran superficiales y la trama era demasiado simplista.', 38, 28);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (36, 2, 'La escritura de este libro me pareció mediocre. No hay nada especial en el lenguaje o en la forma en que se desarrolla la trama.', 6, 33);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (37, 1, 'No puedo recomendar este libro. Me pareció ofensivo y sin sentido.', 6, 42);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (38, 4, 'Qué desperdicio de tiempo, dinero y energía leer este libro tan aburrido.', 11, 16);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (39, 4, 'No puedo creer que alguien pueda disfrutar leyendo algo tan mediocre y carente de originalidad.', 46, 31);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (40, 3, 'Una historia predecible y llena de clichés, no recomendaría este libro a nadie.', 42, 28);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (41, 3, 'No me gustó para nada la manera en que se desarrolló la historia, todo fue muy forzado y poco creíble.', 21, 14);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (42, 5, 'No entiendo cómo este libro ha recibido tantas críticas positivas, para mí fue una total pérdida de tiempo.', 17, 5);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (43, 1, 'Este libro es una completa pérdida de tiempo y dinero. No entiendo cómo alguien podría disfrutarlo', 50, 44);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (44, 0, 'No puedo creer que haya gastado mi tiempo leyendo este libro. Es aburrido, predecible y totalmente sin sentido', 37, 16);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (45, 2, 'La trama es incoherente y los personajes son planos y poco interesantes. Me arrepiento de haber comprado este libro', 41, 37);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (46, 1, 'Nunca he leído algo tan mal escrito en mi vida. Es una tortura intentar seguir la historia', 6, 12);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (47, 1, 'No puedo creer que alguien haya publicado este libro. Es un insulto para la inteligencia de los lectores.', 24, 17);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (48, 4, 'Cada página que leía me enfurecía aún más. ¿Cómo es posible que alguien haya escrito algo tan malo?', 13, 1);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (49, 3, 'Después de leer este libro, no puedo evitar sentirme enojado por haber perdido mi tiempo en algo tan aburrido y mal escrito.', 37, 8);
-INSERT INTO public.comentario OVERRIDING SYSTEM VALUE VALUES (50, 1, 'Si pudiera, le pediría al autor que me devolviera las horas que perdí leyendo este libro. Me dejó molesto y decepcionado.', 33, 27);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (1, 2, 'Este libro es un clásico de la literatura y es imprescindible para cualquier persona interesada en el género.', 33, 8);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (2, 2, 'La trama de este libro es emocionante y me mantuvo enganchado desde el principio hasta el final.', 20, 12);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (3, 5, 'El estilo de escritura del autor es poético y evocador, y me transportó a otro mundo.', 9, 33);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (4, 5, 'No me gustó mucho este libro, ya que la trama era predecible y los personajes no eran interesantes.', 13, 5);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (5, 3, 'Este libro ofrece una perspectiva única sobre un tema importante y me dejó reflexionando durante días.', 19, 50);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (6, 1, 'Este libro me hizo reír y llorar, y me conecté emocionalmente con los personajes. ¡Fue una experiencia increíble!', 27, 44);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (7, 5, 'La prosa del autor es complicada y difícil de seguir, lo que dificultó mi comprensión del libro.', 7, 17);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (8, 3, 'Este libro es una obra maestra de la ficción, con una trama intrigante, personajes bien desarrollados y un final satisfactorio.', 1, 12);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (9, 1, 'Aunque la historia era interesante, encontré algunos errores de edición y gramática que distraían de la lectura.', 30, 42);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (10, 2, 'Este libro fue una decepción, ya que las promesas en la sinopsis no se cumplieron y la historia fue aburrida.', 31, 25);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (11, 3, 'Este libro es una obra maestra de la literatura contemporánea.', 12, 21);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (12, 1, 'Me encantó la forma en que el autor desarrolló los personajes en esta novela.', 38, 22);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (13, 3, 'No puedo dejar de pensar en las ideas y temas que se presentan en este libro.', 31, 43);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (14, 5, 'Aunque el final me dejó un poco decepcionado, la trama en general fue intrigante.', 42, 18);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (15, 3, 'La prosa de este autor es simplemente impresionante, me dejó sin palabras.', 22, 9);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (16, 2, 'Este libro me llevó a un mundo completamente nuevo y fascinante.', 10, 14);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (17, 1, 'La trama es emocionante y llena de giros inesperados que me mantuvieron enganchado hasta el final.', 6, 21);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (18, 3, 'Los personajes estaban bien desarrollados y creíbles, lo que hizo que me preocupara por su destino.', 42, 21);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (19, 3, 'La prosa del autor es hermosa y poética, lo que me hizo detenerme varias veces para reflexionar sobre sus palabras.', 22, 16);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (20, 4, 'Aunque hubo algunos momentos lentos, en general, el libro fue una experiencia increíble que no olvidaré pronto.', 45, 42);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (21, 3, 'No pude conectarme con los personajes, la trama me pareció confusa y el final decepcionante.', 35, 18);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (22, 0, 'El autor tiene una prosa hermosa y una habilidad única para crear escenas vívidas.', 47, 42);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (23, 5, 'Este libro es una obra maestra, una de las mejores que he leído en mucho tiempo.', 17, 24);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (24, 5, 'A pesar de haber sido recomendado por muchos, no pude superar el aburrimiento y abandoné la lectura a la mitad.', 35, 43);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (25, 3, 'Este libro me pareció muy entretenido y adictivo, no podía dejar de leerlo hasta terminarlo.', 19, 17);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (26, 3, 'La trama era interesante, pero la escritura y los diálogos eran un poco flojos en mi opinión.', 49, 9);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (27, 1, 'En general, disfruté mucho leyendo este libro, pero sentí que el final fue un poco apresurado y decepcionante.', 17, 44);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (28, 3, 'Me encantó este libro, fue una gran aventura y no podía dejar de leer.', 7, 19);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (29, 4, 'La prosa de este autor es increíble. Cada frase está bien construida y el lenguaje es hermoso.', 42, 49);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (30, 5, 'Sin duda, este libro es una obra maestra. Los personajes son profundos y la trama es cautivadora.', 48, 3);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (31, 2, 'Este libro tiene un mensaje poderoso que me hizo reflexionar sobre mi propia vida y las decisiones que he tomado.', 36, 25);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (32, 5, 'No me gustó este libro en absoluto. La trama fue predecible y los personajes eran planos.', 37, 47);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (33, 3, 'No entiendo por qué este libro recibió tantas críticas positivas. Me pareció aburrido y difícil de seguir.', 36, 39);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (34, 5, 'Me decepcionó este libro. La trama comenzó bien, pero el final fue una decepción total.', 38, 38);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (35, 4, 'En mi opinión, este libro no vale la pena leer. Los personajes eran superficiales y la trama era demasiado simplista.', 38, 28);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (36, 2, 'La escritura de este libro me pareció mediocre. No hay nada especial en el lenguaje o en la forma en que se desarrolla la trama.', 6, 33);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (37, 1, 'No puedo recomendar este libro. Me pareció ofensivo y sin sentido.', 6, 42);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (38, 4, 'Qué desperdicio de tiempo, dinero y energía leer este libro tan aburrido.', 11, 16);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (39, 4, 'No puedo creer que alguien pueda disfrutar leyendo algo tan mediocre y carente de originalidad.', 46, 31);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (40, 3, 'Una historia predecible y llena de clichés, no recomendaría este libro a nadie.', 42, 28);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (41, 3, 'No me gustó para nada la manera en que se desarrolló la historia, todo fue muy forzado y poco creíble.', 21, 14);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (42, 5, 'No entiendo cómo este libro ha recibido tantas críticas positivas, para mí fue una total pérdida de tiempo.', 17, 5);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (43, 1, 'Este libro es una completa pérdida de tiempo y dinero. No entiendo cómo alguien podría disfrutarlo', 50, 44);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (44, 0, 'No puedo creer que haya gastado mi tiempo leyendo este libro. Es aburrido, predecible y totalmente sin sentido', 37, 16);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (45, 2, 'La trama es incoherente y los personajes son planos y poco interesantes. Me arrepiento de haber comprado este libro', 41, 37);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (46, 1, 'Nunca he leído algo tan mal escrito en mi vida. Es una tortura intentar seguir la historia', 6, 12);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (47, 1, 'No puedo creer que alguien haya publicado este libro. Es un insulto para la inteligencia de los lectores.', 24, 17);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (48, 4, 'Cada página que leía me enfurecía aún más. ¿Cómo es posible que alguien haya escrito algo tan malo?', 13, 1);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (49, 3, 'Después de leer este libro, no puedo evitar sentirme enojado por haber perdido mi tiempo en algo tan aburrido y mal escrito.', 37, 8);
+INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (50, 1, 'Si pudiera, le pediría al autor que me devolviera las horas que perdí leyendo este libro. Me dejó molesto y decepcionado.', 33, 27);
 
 
 --
@@ -1555,57 +1567,57 @@ INSERT INTO "BookAffinity".rol (id_rol, name) OVERRIDING SYSTEM VALUE VALUES (1,
 -- Data for Name: user; Type: TABLE DATA; Schema: BookAffinity; Owner: admin
 --
 
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (1, 'Emerson Serrano', 'XMO98WVV9KH', '/Profile/1.jpg', 'malesuada@yahoo.ca', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (2, 'Shay T. Peña', 'QXS40RIY5QY', '/Profile/2.jpg', 'dignissim.tempor.arcu@aol.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (3, 'Courtney H. Pardo', 'YMM54KRZ6ZM', '/Profile/3.jpg', 'eleifend.nec@protonmail.edu', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (4, 'Ivana Saez', 'CBW42DVK8EI', '/Profile/4.jpg', 'nulla.integer@icloud.com', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (5, 'Kennedy Flores', 'YOJ56UPU4MS', '/Profile/5.jpg', 'ornare.libero@yahoo.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (6, 'Lacey Vidal', 'ALV94IRP7EZ', '/Profile/6.jpg', 'eget.metus@google.ca', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (7, 'Justin U. Arias', 'BHF92BZK5CX', '/Profile/7.jpg', 'in.dolor.fusce@aol.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (8, 'Mira N. Leon', 'KGY74UCB9XT', '/Profile/8.jpg', 'at@google.edu', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (9, 'Tamekah E. Gimenez', 'UXD75PBI6EJ', '/Profile/9.jpg', 'integer.aliquam@aol.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (10, 'Drew K. Castro', 'XKC07ZML3QU', '/Profile/10.jpg', 'pellentesque.eget@hotmail.edu', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (11, 'September K. Ramos', 'QZP62LXE4SL', '/Profile/11.jpg', 'curabitur@aol.net', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (12, 'Zeus W. Andres', 'NXU86XAR7SO', '/Profile/12.jpg', 'augue.ac.ipsum@icloud.ca', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (13, 'Risa Esteban', 'SIJ49UXU8BN', '/Profile/13.jpg', 'dui.nec@hotmail.net', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (14, 'Price X. Pardo', 'NCT87MUD0WV', '/Profile/14.jpg', 'a@icloud.org', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (15, 'Idona S. Aguilar', 'RST29EZC8WO', '/Profile/15.jpg', 'tempus.eu@outlook.edu', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (16, 'Aidan U. Moya', 'QML84KDP0MG', '/Profile/16.jpg', 'magna.et@aol.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (17, 'Ori J. Moreno', 'UTH44QMR8GO', '/Profile/33.jpg', 'nunc.sed.pede@yahoo.com', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (18, 'Cynthia Herrero', 'UKB11DUS6FI', '/Profile/47.jpg', 'luctus.aliquet@icloud.net', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (19, 'Zoe G. Marin', 'ZIO84YZO7CL', '/Profile/48.jpg', 'ut.pharetra@outlook.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (20, 'Scarlett N. Marti', 'YCP96OMR3KE', '/Profile/1.jpg', 'sapien@google.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (21, 'Kiona Jimenez', 'FML18TGP1BL', '/Profile/2.jpg', 'et.euismod.et@yahoo.ca', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (22, 'Remedios Alvarez', 'IGY46GCP5OR', '/Profile/3.jpg', 'est.mauris@protonmail.net', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (23, 'Laith Fuentes', 'NMD87JER0FT', '/Profile/4.jpg', 'dictum@icloud.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (24, 'Brielle L. Duran', 'FPB99NNH5DQ', '/Profile/5.jpg', 'nulla.aliquet@protonmail.edu', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (25, 'Gary Fernandez', 'DCF52TUN4PC', '/Profile/6.jpg', 'augue.eu@yahoo.com', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (26, 'Colin Moreno', 'KEL35GWL8HF', '/Profile/7.jpg', 'libero.dui@protonmail.edu', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (27, 'Velma Pascual', 'NAN38JTL1QF', '/Profile/8.jpg', 'lectus.justo@outlook.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (28, 'Nero Cruz', 'CFK38GPT5EO', '/Profile/9.jpg', 'arcu.iaculis@icloud.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (29, 'Colton Gomez', 'LGB57GRP3RG', '/Profile/10.jpg', 'lorem.ipsum@yahoo.ca', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (30, 'Cameron L. Serrano', 'ESB72HJD5OE', '/Profile/11.jpg', 'nunc@google.net', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (31, 'Basil Moreno', 'DKW58KVB1VY', '/Profile/12.jpg', 'imperdiet.ullamcorper@protonmail.org', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (32, 'Solomon Z. Castro', 'TWR21DHK1IB', '/Profile/13.jpg', 'sapien.aenean@yahoo.org', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (33, 'Kenneth M. Marquez', 'LJY52HLT0PT', '/Profile/14.jpg', 'magna.praesent@hotmail.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (34, 'Kai S. Soto', 'HRI80VGS3KL', '/Profile/15.jpg', 'aliquam@hotmail.net', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (35, 'Alika Nuﾑez', 'IQS86IQK1MJ', '/Profile/16.jpg', 'eu.odio@hotmail.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (36, 'Molly Pastor', 'TNW18SHY7SY', '/Profile/33.jpg', 'sed.auctor@aol.org', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (37, 'Hannah Ferrer', 'WXT58NMK2RG', '/Profile/47.jpg', 'tempor@aol.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (38, 'Brady Perez', 'FUH17TPM1DP', '/Profile/48.jpg', 'est.ac@yahoo.ca', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (39, 'Damon Bravo', 'LCD70RQV5DX', '/Profile/1.jpg', 'fringilla.donec@protonmail.net', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (40, 'Erich V. Gallego', 'IOL15DWO6HE', '/Profile/2.jpg', 'sollicitudin@google.ca', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (41, 'Claudia Vidal', 'HGO81XNH2OG', '/Profile/3.jpg', 'parturient.montes@google.couk', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (42, 'Laith F. Castro', 'XKC88VWT7LE', '/Profile/4.jpg', 'lacus@google.org', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (43, 'Orson Torres', 'CWD43CJB8UN', '/Profile/5.jpg', 'feugiat.lorem@hotmail.couk', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (44, 'Graiden Santos', 'RVE38PFJ5JH', '/Profile/6.jpg', 'eu.tempor@google.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (45, 'Jane Marquez', 'BVG20BDE7KV', '/Profile/7.jpg', 'egestas.duis@google.com', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (46, 'Garrett Ibañez', 'JRP33TGU5DF', '/Profile/8.jpg', 'risus@icloud.org', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (47, 'Kaseem Alonso', 'GPJ94HFT7SZ', '/Profile/9.jpg', 'massa@aol.org', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (48, 'Dylan Hernandez', 'LHG27JKE3TC', '/Profile/10.jpg', 'nec.ante.blandit@icloud.net', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (49, 'Megan I. Cruz', 'XDY96MKP6ZK', '/Profile/11.jpg', 'mattis.cras.eget@icloud.edu', 0, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (50, 'Dacey T. ﾑez', 'MMH36JWN1EX', '/Profile/12.jpg', 'varius.et@protonmail.couk', 1, 1, NULL, NULL);
-INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createAt", "updateAt") OVERRIDING SYSTEM VALUE VALUES (51, 'Juanpe', 'Admin1234', '/Profile/13.jpg', 'juanpemt@gmail.com', 1, 0, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (1, 'Emerson Serrano', 'XMO98WVV9KH', '/Profile/1.jpg', 'malesuada@yahoo.ca', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (2, 'Shay T. Peña', 'QXS40RIY5QY', '/Profile/2.jpg', 'dignissim.tempor.arcu@aol.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (3, 'Courtney H. Pardo', 'YMM54KRZ6ZM', '/Profile/3.jpg', 'eleifend.nec@protonmail.edu', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (4, 'Ivana Saez', 'CBW42DVK8EI', '/Profile/4.jpg', 'nulla.integer@icloud.com', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (5, 'Kennedy Flores', 'YOJ56UPU4MS', '/Profile/5.jpg', 'ornare.libero@yahoo.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (6, 'Lacey Vidal', 'ALV94IRP7EZ', '/Profile/6.jpg', 'eget.metus@google.ca', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (7, 'Justin U. Arias', 'BHF92BZK5CX', '/Profile/7.jpg', 'in.dolor.fusce@aol.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (8, 'Mira N. Leon', 'KGY74UCB9XT', '/Profile/8.jpg', 'at@google.edu', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (9, 'Tamekah E. Gimenez', 'UXD75PBI6EJ', '/Profile/9.jpg', 'integer.aliquam@aol.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (10, 'Drew K. Castro', 'XKC07ZML3QU', '/Profile/10.jpg', 'pellentesque.eget@hotmail.edu', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (11, 'September K. Ramos', 'QZP62LXE4SL', '/Profile/11.jpg', 'curabitur@aol.net', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (12, 'Zeus W. Andres', 'NXU86XAR7SO', '/Profile/12.jpg', 'augue.ac.ipsum@icloud.ca', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (13, 'Risa Esteban', 'SIJ49UXU8BN', '/Profile/13.jpg', 'dui.nec@hotmail.net', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (14, 'Price X. Pardo', 'NCT87MUD0WV', '/Profile/14.jpg', 'a@icloud.org', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (15, 'Idona S. Aguilar', 'RST29EZC8WO', '/Profile/15.jpg', 'tempus.eu@outlook.edu', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (16, 'Aidan U. Moya', 'QML84KDP0MG', '/Profile/16.jpg', 'magna.et@aol.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (17, 'Ori J. Moreno', 'UTH44QMR8GO', '/Profile/33.jpg', 'nunc.sed.pede@yahoo.com', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (18, 'Cynthia Herrero', 'UKB11DUS6FI', '/Profile/47.jpg', 'luctus.aliquet@icloud.net', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (19, 'Zoe G. Marin', 'ZIO84YZO7CL', '/Profile/48.jpg', 'ut.pharetra@outlook.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (20, 'Scarlett N. Marti', 'YCP96OMR3KE', '/Profile/1.jpg', 'sapien@google.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (21, 'Kiona Jimenez', 'FML18TGP1BL', '/Profile/2.jpg', 'et.euismod.et@yahoo.ca', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (22, 'Remedios Alvarez', 'IGY46GCP5OR', '/Profile/3.jpg', 'est.mauris@protonmail.net', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (23, 'Laith Fuentes', 'NMD87JER0FT', '/Profile/4.jpg', 'dictum@icloud.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (24, 'Brielle L. Duran', 'FPB99NNH5DQ', '/Profile/5.jpg', 'nulla.aliquet@protonmail.edu', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (25, 'Gary Fernandez', 'DCF52TUN4PC', '/Profile/6.jpg', 'augue.eu@yahoo.com', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (26, 'Colin Moreno', 'KEL35GWL8HF', '/Profile/7.jpg', 'libero.dui@protonmail.edu', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (27, 'Velma Pascual', 'NAN38JTL1QF', '/Profile/8.jpg', 'lectus.justo@outlook.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (28, 'Nero Cruz', 'CFK38GPT5EO', '/Profile/9.jpg', 'arcu.iaculis@icloud.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (29, 'Colton Gomez', 'LGB57GRP3RG', '/Profile/10.jpg', 'lorem.ipsum@yahoo.ca', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (30, 'Cameron L. Serrano', 'ESB72HJD5OE', '/Profile/11.jpg', 'nunc@google.net', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (31, 'Basil Moreno', 'DKW58KVB1VY', '/Profile/12.jpg', 'imperdiet.ullamcorper@protonmail.org', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (32, 'Solomon Z. Castro', 'TWR21DHK1IB', '/Profile/13.jpg', 'sapien.aenean@yahoo.org', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (33, 'Kenneth M. Marquez', 'LJY52HLT0PT', '/Profile/14.jpg', 'magna.praesent@hotmail.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (34, 'Kai S. Soto', 'HRI80VGS3KL', '/Profile/15.jpg', 'aliquam@hotmail.net', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (35, 'Alika Nuﾑez', 'IQS86IQK1MJ', '/Profile/16.jpg', 'eu.odio@hotmail.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (36, 'Molly Pastor', 'TNW18SHY7SY', '/Profile/33.jpg', 'sed.auctor@aol.org', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (37, 'Hannah Ferrer', 'WXT58NMK2RG', '/Profile/47.jpg', 'tempor@aol.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (38, 'Brady Perez', 'FUH17TPM1DP', '/Profile/48.jpg', 'est.ac@yahoo.ca', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (39, 'Damon Bravo', 'LCD70RQV5DX', '/Profile/1.jpg', 'fringilla.donec@protonmail.net', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (40, 'Erich V. Gallego', 'IOL15DWO6HE', '/Profile/2.jpg', 'sollicitudin@google.ca', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (41, 'Claudia Vidal', 'HGO81XNH2OG', '/Profile/3.jpg', 'parturient.montes@google.couk', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (42, 'Laith F. Castro', 'XKC88VWT7LE', '/Profile/4.jpg', 'lacus@google.org', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (43, 'Orson Torres', 'CWD43CJB8UN', '/Profile/5.jpg', 'feugiat.lorem@hotmail.couk', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (44, 'Graiden Santos', 'RVE38PFJ5JH', '/Profile/6.jpg', 'eu.tempor@google.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (45, 'Jane Marquez', 'BVG20BDE7KV', '/Profile/7.jpg', 'egestas.duis@google.com', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (46, 'Garrett Ibañez', 'JRP33TGU5DF', '/Profile/8.jpg', 'risus@icloud.org', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (47, 'Kaseem Alonso', 'GPJ94HFT7SZ', '/Profile/9.jpg', 'massa@aol.org', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (48, 'Dylan Hernandez', 'LHG27JKE3TC', '/Profile/10.jpg', 'nec.ante.blandit@icloud.net', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (49, 'Megan I. Cruz', 'XDY96MKP6ZK', '/Profile/11.jpg', 'mattis.cras.eget@icloud.edu', 0, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (50, 'Dacey T. ﾑez', 'MMH36JWN1EX', '/Profile/12.jpg', 'varius.et@protonmail.couk', 1, 1, NULL, NULL);
+INSERT INTO "BookAffinity"."user" (id_user, name, pass, picture, email, status, id_rol, "createdAt", "updatedAt") OVERRIDING SYSTEM VALUE VALUES (51, 'Juanpe', 'Admin1234', '/Profile/13.jpg', 'juanpemt@gmail.com', 1, 0, NULL, NULL);
 
 
 --

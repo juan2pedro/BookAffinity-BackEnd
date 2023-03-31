@@ -1,9 +1,10 @@
 import express from "express";
+import dotenv from "dotenv"
+dotenv.config()
 
-import bookRouter from './routes/book.router'
+import bookRouter from './routes/book.routes'
 import userRoutes from './routes/user.routes'
 import copyRouter from "./routes/copy.routes";
-
 
 const app = express()
 const cors = require('cors')
@@ -20,8 +21,6 @@ app.get("/ping", (_req, res) => {
 
 app.use('/api/book',bookRouter)
 app.use('/api/user', userRoutes)
-app.use('/api/chat', userRoutes)
-app.use('/api/message', userRoutes)
 app.use('/api/copy', copyRouter)
 
 

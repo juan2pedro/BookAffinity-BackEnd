@@ -1,5 +1,5 @@
 import { ImgCommentPojo } from "../models/img-comment.model";
-import { connect } from "../config/author.db.config";
+import { connect } from "../config/img-comment.db.config";
 
 export class ImgCommentRepository {
   _db: any = {};

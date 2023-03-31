@@ -1,8 +1,5 @@
-import { RolPojo } from './../models/rol.model';
 import { Sequelize } from "sequelize-typescript";
-import { UserPojo } from "../models/user.model";
-import { ChatPojo } from '../models/chat.model';
-import { MessagePojo } from '../models/message.model';
+import { InvoicePojo } from "../models/invoice.model";
 
 export const connect = () => {
     
@@ -28,7 +25,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([UserPojo, RolPojo, ChatPojo, MessagePojo])
+    sequelize.addModels([InvoicePojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize
