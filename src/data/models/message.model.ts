@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey
+import { Table, Column, Model, ForeignKey, BelongsTo
  } from "sequelize-typescript";
 import { NUMBER, STRING } from "sequelize";
 import { ChatPojo } from "./chat.model";
@@ -22,7 +22,7 @@ id_message: number
     type: STRING,
     field: 'text'
 })
-isbn: string
+text: string
 
 
 @Column({
@@ -37,5 +37,8 @@ date: string
     field: 'id_chat'
 })
 id_chat: string
+
+@BelongsTo(() => ChatPojo)
+chat: ChatPojo[]
 
 }

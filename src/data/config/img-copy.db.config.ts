@@ -1,9 +1,9 @@
-import { ImgCopyPojo } from './../models/img-copy.model';
-import { MessagePojo } from './../models/message.model';
-import { ChatPojo } from './../models/chat.model';
 import { Sequelize } from "sequelize-typescript";
+import { ChatPojo } from "../models/chat.model";
 import { CopyPojo } from "../models/copy.model";
+import { ImgCopyPojo } from "../models/img-copy.model";
 import { InvoicePojo } from "../models/invoice.model";
+import { MessagePojo } from "../models/message.model";
 import { RolPojo } from "../models/rol.model";
 import { UserPojo } from "../models/user.model";
 import propertiesReader from 'properties-reader'
@@ -14,6 +14,7 @@ export const connect = () => {
     
     const USERNAME = properties.get('username');
     const PASSWORD = properties.get('password');
+
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'

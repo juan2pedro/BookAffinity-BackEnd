@@ -1,6 +1,7 @@
 import { ChatPojo } from './../models/chat.model';
 import { UserPojo } from "../models/user.model";
-import { connect } from "../config/user.db.config";
+import { connect } from "../config/chat.db.config";
+import { Op } from 'sequelize';
 
 export class ChatRepository {
 _db: any = {};
@@ -14,23 +15,27 @@ constructor() {
 }
 
 
-async getAllMessage(): Promise <ChatPojo[]>{
-    try {
-        return await this._chatRepository.findAll()
-    } catch (error){
-        console.error(error)
-        return []
-    }
-}
-
-
-async addMessage (newMessage: ChatPojo) : Promise<string>{
+async getChatbyUserId(id:number) : Promise<ChatPojo[] | undefined>{
     try{
-        newMessage= await this._chatRepository.create(newMessage)
-        return newMessage.id
-    } catch (error) {
-        console.log(error)
-        return 'ok'
+        return await this._chatRepository.findAll({
+            where : {
+                [Op.or] : [
+                    {
+                        id_user1 : id
+                    },{
+                        id_user2 : id
+                    }
+                ]
+            }
+        },{ include : this._userRepository })
+    }catch (error) {
+        console.error(error)
+        return undefined
     }
+
 }
+
+
+
+
 }

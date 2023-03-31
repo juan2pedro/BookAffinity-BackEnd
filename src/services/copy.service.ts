@@ -1,11 +1,16 @@
-import { CopyDTO, NewCopyDTO } from "../types";
+import { ImgCopyRepository } from './../data/repositories/img-copy.repository';
+import { CopyDTO, NewCopyDTO, NewInvoiceDTO } from "../types";
 import { CopyRepository } from "../data/repositories/copy.repository";
 import { CopyPojo } from "../data/models/copy.model";
+import { InvoicePojo } from '../data/models/invoice.model';
 
 export class CopyService {
   _copyRepository: CopyRepository;
+  _imgCopyRepository: ImgCopyRepository;
+
   constructor() {
     this._copyRepository = new CopyRepository();
+    this._imgCopyRepository = new ImgCopyRepository();
   }
 
   parsePojoIntoDto(copyPojo: CopyPojo): CopyDTO {
@@ -15,7 +20,7 @@ export class CopyService {
       price: copyPojo.dataValues.price,
       status: copyPojo.dataValues.status,
       id_user: copyPojo.dataValues.id_user,
-      id_book: copyPojo.dataValues.id_book
+      id_book: copyPojo.dataValues.id_book,
     };
 
     return copyDto;
@@ -95,5 +100,22 @@ export class CopyService {
     return copyPromise;
   }
 
- 
+  async createInvoice(invoice: NewInvoiceDTO): Promise<number> {
+    const invoicePojo: InvoicePojo = this.parseNewInvoiceDtoIntoPojo(invoice);
+    const invoicePromise = await this._copyRepository
+      .createInvoice(invoicePojo)
+      .then((id_invoice) => {
+        return id_invoice;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return invoicePromise;
+  }
+  
+
+  parseNewInvoiceDtoIntoPojo(invoiceDto: NewInvoiceDTO): InvoicePojo {
+    return invoiceDto as InvoicePojo;
+  }
 }

@@ -1,7 +1,8 @@
-import { Table, Column, Model } from "sequelize-typescript";
+import { ImgCopyPojo } from './img-copy.model';
+import { Table, Column, Model, HasMany } from "sequelize-typescript";
 import { HasOne } from "sequelize-typescript";
 import { STRING, NUMBER } from "sequelize";
- import { InvoicePojo } from "./invoice.model";
+import { InvoicePojo } from "./invoice.model";
 
 @Table({
   freezeTableName: true,
@@ -50,4 +51,7 @@ export class CopyPojo extends Model {
   price: number;
 
   @HasOne(() => InvoicePojo) invoice: InvoicePojo[]
+
+  @HasMany(() => ImgCopyPojo)
+  imgCopies: ImgCopyPojo[]
 }

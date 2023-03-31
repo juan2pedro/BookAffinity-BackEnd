@@ -1,13 +1,18 @@
 import { CopyPojo } from "../models/copy.model";
 import { connect } from "../config/copy.db.config";
+import { InvoicePojo } from "../models/invoice.model";
 
 export class CopyRepository {
   _db: any = {};
   _copyRepository: any;
+  _invoiceRepository: any;
+
 
   constructor() {
     this._db = connect();
     this._copyRepository = this._db.sequelize.getRepository(CopyPojo);
+    this._invoiceRepository = this._db.sequelize.getRepository(InvoicePojo);
+
   }
 
   async getAllCopiesByBook(id: number): Promise<CopyPojo[]> {
@@ -51,13 +56,13 @@ export class CopyRepository {
 
   async updateCopy(newCopy: CopyPojo): Promise<number> {
     try {
-       await this._copyRepository.update({
+      await this._copyRepository.update({
         price: newCopy.price,
         visible: newCopy.visible,
         status: newCopy.status,
         id_user : newCopy.id_user,
         id_book : newCopy.id_book
-       }, {
+      }, {
         where: {
           id_copy: newCopy.id_copy
         },
@@ -66,6 +71,17 @@ export class CopyRepository {
     } catch (error) {
       console.error(error);
       return error.toString();
+    }
+  }
+
+  
+  async createInvoice(newInvoice: InvoicePojo): Promise<number> {
+    try {
+      newInvoice = await this._invoiceRepository.create(newInvoice);
+      return newInvoice.id_invoice;
+    } catch (error) {
+      console.error(error);
+      return -1;
     }
   }
 }

@@ -1,19 +1,15 @@
-import { ImgCopyPojo } from './../models/img-copy.model';
 import { MessagePojo } from './../models/message.model';
-import { ChatPojo } from './../models/chat.model';
+import { UserPojo } from './../models/user.model';
 import { Sequelize } from "sequelize-typescript";
-import { CopyPojo } from "../models/copy.model";
-import { InvoicePojo } from "../models/invoice.model";
-import { RolPojo } from "../models/rol.model";
-import { UserPojo } from "../models/user.model";
-import propertiesReader from 'properties-reader'
+import { ChatPojo } from "../models/chat.model";
+import propertiesreader from 'properties-reader'
 
+var properties = propertiesreader('./src/db_config.properties');
+
+const USERNAME = properties.get('username');
+const PASSWORD = properties.get('password');
 
 export const connect = () => {
-    var properties = propertiesReader('./src/db_config.properties')
-    
-    const USERNAME = properties.get('username');
-    const PASSWORD = properties.get('password');
     const DB_HOSTNAME = 'localhost'
     const DB_PORT = 5432
     const DB_NAME = 'BookAffinity_db'
@@ -36,9 +32,9 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([CopyPojo, InvoicePojo, UserPojo, RolPojo, ChatPojo, MessagePojo, ImgCopyPojo])
+    sequelize.addModels([ChatPojo, UserPojo, MessagePojo])
     const db : any = {}
-    db.Sequelize = Sequelize
+    db.Sequelize = sequelize
     db.sequelize = sequelize
 
     return db
