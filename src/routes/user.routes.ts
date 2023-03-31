@@ -3,7 +3,7 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/get/:email/:pass', userController.getUserbyEmailAndPassword)
+router.post('/login', userController.getUserbyEmailAndPassword)
 router.post('/add/user', userController.addUser)
 router.post('/add/message', userController.addMessage)
 router.get('/get/all', userController.getAllUsers)                          // Funciona

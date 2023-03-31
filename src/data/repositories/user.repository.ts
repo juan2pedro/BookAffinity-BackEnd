@@ -15,12 +15,12 @@ export class UserRepository {
     this._rolRepository = this._db.sequelize.getRepository(RolPojo);
   }
 
-    async getUserbyEmailAndPassword(email:string, password:string): Promise<UserPojo[]> {
+    async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserPojo[]> {
         try {
             const user = await this._userRepository.findOne({
                 where: {
                     email: email,
-                    password: password
+                    pass: pass
                 }
             });
             console.log("user:::", user);
