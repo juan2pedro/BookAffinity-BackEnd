@@ -16,8 +16,8 @@ export const BookController = {
 
   getBookById: (req: any, res: any) => {
     try {
-      const id_book = req.params.id;
-      bookService.getBookById(id_book).then((result) => {
+      const id_book = req.params.id_book;
+      bookService.getBookById(id_book).then(result => {
         res.json(result);
       });
     } catch (excepcion) {
@@ -64,7 +64,7 @@ export const BookController = {
 
   deleteBook: (req: any, res: any) => {
     try {
-      const id_book = req.params.id;
+      const id_book = req.params.id_book;
       bookService.deleteBook(id_book).then((result) => {
         res.json(result);
       });
