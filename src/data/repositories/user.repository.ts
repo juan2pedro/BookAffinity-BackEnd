@@ -15,7 +15,7 @@ export class UserRepository {
     this._rolRepository = this._db.sequelize.getRepository(RolPojo);
   }
 
-    async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserPojo[]> {
+    async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserPojo> {
         try {
             const user = await this._userRepository.findOne({
                 where: {
@@ -27,7 +27,7 @@ export class UserRepository {
             return user;
         } catch (error) {
             console.error(error);
-        return [];
+        return error;
         }
     }
     async getAllUsers(): Promise <UserPojo[]>{
