@@ -73,7 +73,8 @@ export class UserRepository {
     async addUser (newUser: UserPojo) : Promise<number>{
         try{
             newUser = await this._userRepository.create(newUser)
-            return newUser.id
+            console.log("%%%%%%%%%" + newUser.id_user)
+            return newUser.id_user
         } catch (error) {
             console.log(error)
             return -1
