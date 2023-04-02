@@ -1,7 +1,6 @@
 import { BookService } from "../services/book.service";
 const bookService: BookService = new BookService();
-import { CategoryService } from "../services/category.service";
-const categoryService: CategoryService = new CategoryService();
+
 export const BookController = {
   getAllBooks: (_req: any, res: any) => {
     bookService
@@ -61,17 +60,6 @@ export const BookController = {
       console.log(excepcion);
       res.sendStatus(500);
     }
-  },
-  getAllCategory: (_req: any, res: any) => {
-    categoryService
-      .getAllCategorys()
-      .then((result) => {
-        res.json(result);
-      })
-      .catch((excepcion) => {
-        console.error(excepcion);
-        res.send(500);
-      });
   }
 
 }

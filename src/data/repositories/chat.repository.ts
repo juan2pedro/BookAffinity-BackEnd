@@ -14,7 +14,6 @@ constructor() {
     this._chatRepository = this._db.sequelize.getRepository(ChatPojo);
 }
 
-
 async getChatbyUserId(id:number) : Promise<ChatPojo[] | undefined>{
     try{
         return await this._chatRepository.findAll({

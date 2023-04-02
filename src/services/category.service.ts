@@ -28,7 +28,7 @@ export class CategoryService {
     }
     parsePojoIntoDTO(categoryPojo: CategoryPojo): CategoryDTO {
         const categoryDTO: CategoryDTO = {
-            id_category: categoryPojo.dataValues.id_category,
+            id_category: categoryPojo.dataValues?.id_category,
             name_category: categoryPojo.dataValues.name_category
         }
         return categoryDTO;
