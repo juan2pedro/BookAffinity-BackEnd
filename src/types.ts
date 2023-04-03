@@ -12,8 +12,9 @@ export class BookDTO {
   language?: number;
   categories?: CategoryDTO[];
   category?: CategoryDTO;
-  imgs?: ImgBookDTO[];
   comments?: CommentDTO[];
+  picture?: string;
+
 }
 export class BookCategoriesDTO {
   id_book_categories: number;

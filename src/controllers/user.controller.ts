@@ -3,8 +3,11 @@ const userService: UserService = new UserService();
 
 export const userController = {
   getUserbyEmailAndPassword: (req: any, res: any) => {
-    const email = req.params.email
-    const pass = req.params.pass
+    console.log("################################")
+    console.log(req.body.email)
+    const email = req.body.email
+    const pass = req.body.pass
+    console.log("AAAAAAAAAAAAAAAAAAAAAAA")
     userService
       .getUserbyEmailAndPassword(email,pass)
       .then((result) => {
@@ -32,6 +35,7 @@ export const userController = {
     try {
       const newUser = req.body;
       userService.addUser(newUser).then((result) => {
+        console.log(result);
         res.json(result);
       })
     } catch (excepcion) {

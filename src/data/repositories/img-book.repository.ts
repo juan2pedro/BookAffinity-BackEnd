@@ -1,5 +1,5 @@
 import { ImgBookPojo } from "../models/img-book.model";
-import { connect } from "../config/author.db.config";
+import { connect } from "../config/img-book.db.config";
 
 export class ImgBookRepository {
   _db: any = {};
@@ -28,6 +28,15 @@ export class ImgBookRepository {
     } catch (error) {
       console.log(error);
       return -1;
+    }
+  }
+  async getImgByIdBook(id_img_book: number): Promise<ImgBookPojo | undefined> {
+    try {
+      return this._imgbookRepository.findByPk(id_img_book);
+
+    } catch (error) {
+      console.error(error);
+      return error;
     }
   }
 }

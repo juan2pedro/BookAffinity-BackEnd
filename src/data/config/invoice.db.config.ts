@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
-import { CommentPojo } from "../models/comment.model";
-import { ImgCommentPojo } from "../models/img-comment.model";
+import { InvoicePojo } from "../models/invoice.model";
 
 export const connect = () => {
     
@@ -26,7 +25,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([CommentPojo, ImgCommentPojo])
+    sequelize.addModels([InvoicePojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize

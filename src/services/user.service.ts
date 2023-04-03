@@ -18,16 +18,13 @@ export class UserService {
     this._messageRepository = new MessageRepository();
   }
 
-  async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserDTO[]> {
+  async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserDTO> {
     const usersPromise = await this._userRepository
       .getUserbyEmailAndPassword(email, pass)
-      .then((usersAsPojo) => {
-        let usersAsDTO: UserDTO[] = [];
-        usersAsPojo.forEach((userAsPojo) => {
+      .then((userAsPojo) => {
           let userAsDTO = this.parsePojoIntoDTO(userAsPojo);
-          usersAsDTO.push(userAsDTO);
-        });
-        return usersAsDTO;
+
+        return userAsDTO;
       })
       .catch((error) => {
         console.error(error);
@@ -56,11 +53,12 @@ export class UserService {
 
 
 
-  async addUser(user: UserDTO): Promise<number> {
+  async addUser(user: NewUserDTO): Promise<number> {
     const userPojo: UserPojo = this.parseDTOIntoPojo(user);
     const userPromise = await this._userRepository
       .addUser(userPojo)
       .then((id_user) => {
+        console.log(id_user);
         return id_user;
       })
       .catch((error) => {
@@ -69,12 +67,13 @@ export class UserService {
       });
     return userPromise;
   }
+
   async addMessage(message: NewMessageDTO): Promise<number> {
     const messagePojo: MessagePojo = this.parseDTOIntoMessagePojo(message);
     const messagePromise = await this._messageRepository
       .addMessage(messagePojo)
-      .then((message_id) => {
-        return message_id;
+      .then((id_message) => {
+        return id_message;
       })
       .catch((error) => {
         console.error(error);
@@ -82,6 +81,7 @@ export class UserService {
       });
     return messagePromise;
   }
+
   async getUserbyId (id:number) : Promise<UserDTO | undefined>{
     const userPromise = await this._userRepository.getUserbyId(id).then(userAsPojo =>{
         if(!!userAsPojo) {
@@ -96,6 +96,7 @@ export class UserService {
     })
     return userPromise
   }
+
   async getMessagebyChatId(id_chat:number): Promise<MessageDTO[]> {
     const messagesPromise = await this._messageRepository
       .getMessagebyChatId(id_chat)
@@ -176,7 +177,7 @@ export class UserService {
       name: userPojo.dataValues.rol?.dataValues.name
     }
     const userDTO: UserDTO = {
-      id_user: userPojo.dataValues.user_id,
+      id_user: userPojo.dataValues.id_user,
       name: userPojo.dataValues.name,
       pass: userPojo.dataValues.pass,
       picture: userPojo.dataValues.picture,
@@ -203,7 +204,7 @@ export class UserService {
 
   parseUserPojoFromChatPojoToUserDto(userPojo: UserPojo) : ChatUserDTO {
     let userDto : ChatUserDTO = {
-      id_user: userPojo.dataValues.user_id,
+      id_user: userPojo.dataValues.id_user,
       name: userPojo.dataValues.name,
       picture: userPojo.dataValues.picture,
       email: userPojo.dataValues.email,

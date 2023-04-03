@@ -1,26 +1,27 @@
 import { Sequelize } from "sequelize-typescript";
 import { ImgBookPojo } from "../models/img-book.model";
-import propertiesreader from 'properties-reader'
-
-var properties = propertiesreader('../../db_config.properties');
-
-const USERNAME = properties.get('username');
-const PASSWORD = properties.get('password');
+import { AuthorPojo } from "../models/author.model";
+import { BookCategoriesPojo } from "../models/book-categories";
+import { BookPojo } from "../models/book.model";
+import { CategoryPojo } from "../models/category.model";
+import { CommentPojo } from "../models/comment.model";
+import { ImgCommentPojo } from "../models/img-comment.model";
 
 export const connect = () => {
-    const DB_HOSTNAME = 'localhost'
-    const DB_PORT = 5432
+    
+    const HOST = !(process.env.DB_HOST == null) ? process.env.DB_HOST : 'localhost'
+    const PORT = !(process.env.DB_PORT == null) ? process.env.DB_PORT : 5432
+    const DB_USERNAME = !(process.env.DB_USER == null) ? process.env.DB_USER : 'postgres'
+    const DB_PASSWORD = !(process.env.DB_PASSWORD == null) ? process.env.DB_PASSWORD : 'postgres'
     const DB_NAME = 'BookAffinity_db'
-    const DB_USERNAME = USERNAME
-    const DB_PASSWORD = PASSWORD
     const DB_SCHEMA = 'BookAffinity'
     const DB_DIALECT : any = 'postgres'
 
     const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-        host: DB_HOSTNAME,
+        host: HOST,
         dialect: DB_DIALECT,
         schema: DB_SCHEMA,
-        port: DB_PORT,
+        port: +PORT,
         repositoryMode: true,
         pool: {
             max: 10,
@@ -30,7 +31,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([ImgBookPojo])
+    sequelize.addModels([BookPojo, CategoryPojo, BookCategoriesPojo, AuthorPojo, ImgBookPojo, CommentPojo, ImgCommentPojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize

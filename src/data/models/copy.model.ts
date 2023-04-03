@@ -53,5 +53,6 @@ export class CopyPojo extends Model {
   @HasOne(() => InvoicePojo) invoice: InvoicePojo[]
 
   @HasMany(() => ImgCopyPojo)
-  imgCopies: ImgCopyPojo[]
+  ImgCopy: ImgCopyPojo[];
+
 }

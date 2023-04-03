@@ -1,15 +1,28 @@
 import { BookPojo } from "../data/models/book.model";
+import { AuthorRepository } from "../data/repositories/author.repository";
+import { AuthorPojo } from "../data/models/author.model";
 import { CategoryPojo } from "../data/models/category.model";
 import { CommentPojo } from "../data/models/comment.model";
 import { ImgBookPojo } from "../data/models/img-book.model";
 import { BookRepository } from "../data/repositories/book.repository";
+<<<<<<< HEAD
 import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO, ImgBookDTO } from "../types";
+=======
+import { AuthorDTO, BookDTO, CategoryDTO, ImgBookDTO } from "../types";
+import { ImgBookRepository } from "../data/repositories/img-book.repository";
+import { ImgBookPojo } from "../data/models/img-book.model";
+>>>>>>> origin/dev
 
 export class BookService {
+
   _bookRepository: BookRepository;
+  _authorRepository: AuthorRepository;
+  _imgBookRepository: ImgBookRepository;
 
   constructor() {
     this._bookRepository = new BookRepository();
+    this._authorRepository = new AuthorRepository();
+    this._imgBookRepository = new ImgBookRepository();
   }
 
   async getAllBooks(): Promise<BookDTO[]> {
@@ -45,6 +58,21 @@ export class BookService {
       });
     return bookPromise;
   }
+  async getImgByIdBook(id_img_book: number): Promise<ImgBookDTO | undefined> {
+    const imgBookPromise = await this._imgBookRepository
+      .getImgByIdBook(id_img_book)
+      .then((imgBookAsPojo) => {
+        console.log(imgBookAsPojo);
+        if (!!imgBookAsPojo) {
+          return this.parseImgBookPojoIntoDTO(imgBookAsPojo);
+        } else return undefined;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return imgBookPromise;
+  }
 
   async addBook(book: BookDTO): Promise<number> {
     const bookPojo: BookPojo = this.parseDTOIntoPojo(book);
@@ -59,7 +87,6 @@ export class BookService {
       });
     return bookPromise;
   }
-
 
   async deleteBook(id_book: number): Promise<any> {
     const bookPromise = await this._bookRepository
@@ -84,6 +111,24 @@ export class BookService {
     return bookPromise
   }
 
+  async getAllAuthors(): Promise<AuthorDTO[]> {
+    const authorsPromise = await this._authorRepository
+      .getAllAuthors()
+      .then((authorsAsPojo) => {
+        let authorsAsDTO: AuthorDTO[] = [];
+        authorsAsPojo.forEach((authorAsPojo) => {
+          let authorAsDTO = this.parseAuthorPojoIntoDTO(authorAsPojo);
+          authorsAsDTO.push(authorAsDTO);
+        });
+        return authorsAsDTO;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return authorsPromise;
+  }
+
   parsePojoIntoDTO(bookPojo: BookPojo): BookDTO {
     const authorDTO: AuthorDTO = {
       id_author: bookPojo.dataValues.author?.dataValues.id_author,
@@ -99,21 +144,21 @@ export class BookService {
       author: authorDTO,
       language: bookPojo.dataValues.language,
       categories: [],
-      imgs: [],
       comments: [],
+      picture: bookPojo.dataValues.imgBook[0]?.dataValues.rute
     };
-
-    if (!!bookPojo.dataValues.img && bookPojo.dataValues.img.length > 0) {
-      bookPojo.dataValues.img.forEach((img: ImgBookPojo) => {
-        const imgBookDTO: ImgBookDTO = {
-          id_img_book: img.dataValues.id_img_book,
-          rute: img.dataValues.rute,
-          id_book: img.dataValues.id_book,
-        }
-        bookDTO.imgs.push(imgBookDTO)
-      })
-      return bookDTO;
-    }
+    // Array de imagenes de libros
+    // if (!!bookPojo.dataValues.img && bookPojo.dataValues.img.length > 0) {
+    //   bookPojo.dataValues.img.forEach((img: ImgBookPojo) => {
+    //     const imgBookDTO: ImgBookDTO = {
+    //       id_img_book: img.dataValues.id_img_book,
+    //       rute: img.dataValues.rute,
+    //       id_book: img.dataValues.id_book,
+    //     }
+    //     bookDTO.imgs.push(imgBookDTO)
+    //   })
+    //   return bookDTO;
+    // }
 
     if (!!bookPojo.dataValues.comment && bookPojo.dataValues.comment.length > 0) {
       bookPojo.dataValues.comment.forEach((comment: CommentPojo) => {
@@ -141,7 +186,29 @@ export class BookService {
     return bookDTO;
   }
 
+  parseImgBookPojoIntoDTO(imgBookPojo: ImgBookPojo): ImgBookDTO {
+    const imgBookDTO : ImgBookDTO ={
+      id_img_book: imgBookPojo.dataValues.id_img_book,
+      rute: imgBookPojo.dataValues.id_img_book
+    };
+    return imgBookDTO
+  }
+
   parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {
     return bookDTO as unknown as BookPojo;
+  }
+
+  parseAuthorPojoIntoDTO(authorPojo: AuthorPojo): AuthorDTO {
+    const authorDTO: AuthorDTO = {
+      id_author: authorPojo.dataValues.id_author,
+      name_author: authorPojo.dataValues.name_author,
+    };
+
+    return authorDTO;
+  }
+
+  parseAuthorDTOIntoPojo(authorDTO: AuthorDTO): AuthorPojo {
+
+    return authorDTO as AuthorPojo;
   }
 }

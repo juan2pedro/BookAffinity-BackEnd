@@ -1,33 +1,33 @@
-import { RolPojo } from './../models/rol.model';
+import { RolPojo } from "./../models/rol.model";
 import { UserPojo } from "../models/user.model";
 import { connect } from "../config/user.db.config";
 import { Op } from 'sequelize';
 // ↑ alternativa -> const { Op } = require("sequelize");
 
 export class UserRepository {
-_db: any = {};
-_userRepository: any;
-_rolRepository: any;
+  _db: any = {};
+  _userRepository: any;
+  _rolRepository: any;
 
-constructor() {
+  constructor() {
     this._db = connect();
     this._userRepository = this._db.sequelize.getRepository(UserPojo);
     this._rolRepository = this._db.sequelize.getRepository(RolPojo);
-}
+  }
 
-    async getUserbyEmailAndPassword(email:string, password:string): Promise<UserPojo[]> {
+    async getUserbyEmailAndPassword(email:string, pass:string): Promise<UserPojo> {
         try {
             const user = await this._userRepository.findOne({
                 where: {
                     email: email,
-                    password: password
+                    pass: pass
                 }
             });
             console.log("user:::", user);
             return user;
         } catch (error) {
             console.error(error);
-        return [];
+        return error;
         }
     }
     async getAllUsers(): Promise <UserPojo[]>{
@@ -73,7 +73,8 @@ constructor() {
     async addUser (newUser: UserPojo) : Promise<number>{
         try{
             newUser = await this._userRepository.create(newUser)
-            return newUser.id
+            console.log("%%%%%%%%%" + newUser.id_user)
+            return newUser.id_user
         } catch (error) {
             console.log(error)
             return -1
