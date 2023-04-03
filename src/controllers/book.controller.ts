@@ -25,6 +25,17 @@ export const BookController = {
       res.sendStatus(500);
     }
   },
+  getImgByIdBook: (req: any, res: any) => {
+    try {
+      const id_img_book = req.params.id_book;
+      bookService.getImgByIdBook(id_img_book).then(result => {
+        res.json(result);
+      });
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
 
   addBook: (req: any, res: any) => {
     try {

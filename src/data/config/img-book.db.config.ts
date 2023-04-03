@@ -1,5 +1,11 @@
 import { Sequelize } from "sequelize-typescript";
 import { ImgBookPojo } from "../models/img-book.model";
+import { AuthorPojo } from "../models/author.model";
+import { BookCategoriesPojo } from "../models/book-categories";
+import { BookPojo } from "../models/book.model";
+import { CategoryPojo } from "../models/category.model";
+import { CommentPojo } from "../models/comment.model";
+import { ImgCommentPojo } from "../models/img-comment.model";
 
 export const connect = () => {
     
@@ -25,7 +31,7 @@ export const connect = () => {
         }
     })
 
-    sequelize.addModels([ImgBookPojo])
+    sequelize.addModels([BookPojo, CategoryPojo, BookCategoriesPojo, AuthorPojo, ImgBookPojo, CommentPojo, ImgCommentPojo])
     const db : any = {}
     db.Sequelize = Sequelize
     db.sequelize = sequelize

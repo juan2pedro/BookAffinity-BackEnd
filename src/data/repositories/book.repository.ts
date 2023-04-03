@@ -3,6 +3,7 @@ import { connect } from "../config/book.db.config";
 import { CategoryPojo } from "../models/category.model";
 import { AuthorPojo } from "../models/author.model";
 import { BookCategoriesPojo } from "../models/book-categories";
+import { ImgBookPojo } from "../models/img-book.model";
 
 export class BookRepository {
   _db: any = {};
@@ -10,18 +11,20 @@ export class BookRepository {
   _categoryRepository: any;
   _bookCategoryRepository: any;
   _authorRepository : any;
+  _imgBookRepository : any;
 
   constructor() {
     this._db = connect();
     this._bookRepository = this._db.sequelize.getRepository(BookPojo);
     this._categoryRepository = this._db.sequelize.getRepository(CategoryPojo);
     this._bookCategoryRepository = this._db.sequelize.getRepository(BookCategoriesPojo);
-   this._authorRepository = this._db.sequelize.getRepository(AuthorPojo);
+    this._authorRepository = this._db.sequelize.getRepository(AuthorPojo);
+    this._imgBookRepository = this._db.sequelize.getRepository(ImgBookPojo);
   }
 
   async getAllBooks(): Promise<BookPojo[]> {
     try {
-      const books = await this._bookRepository.findAll({include : [this._categoryRepository]});
+      const books = await this._bookRepository.findAll({include : [this._categoryRepository, this._imgBookRepository]});
       console.log("books:::", books);
       return books;
     } catch (error) {
