@@ -4,17 +4,21 @@ import { AuthorPojo } from "../data/models/author.model";
 import { CategoryPojo } from "../data/models/category.model";
 import { BookRepository } from "../data/repositories/book.repository";
 import { CommentRepository } from "../data/repositories/comment.repository";
-import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO } from "../types";
+import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO, ImgBookDTO } from "../types";
 import { CommentPojo } from "../data/models/comment.model";
+import { ImgBookRepository } from "../data/repositories/img-book.repository";
+import { ImgBookPojo } from "../data/models/img-book.model";
 
 export class BookService {
   _bookRepository: BookRepository;
   _authorRepository: AuthorRepository;
+  _imgBookRepository: ImgBookRepository;
   _commentRepository: CommentRepository;
 
   constructor() {
     this._bookRepository = new BookRepository();
     this._authorRepository = new AuthorRepository();
+    this._imgBookRepository = new ImgBookRepository();
     this._commentRepository = new CommentRepository();
   }
 
@@ -50,6 +54,21 @@ export class BookService {
         throw error;
       });
     return bookPromise;
+  }
+  async getImgByIdBook(id_img_book: number): Promise<ImgBookDTO | undefined> {
+    const imgBookPromise = await this._imgBookRepository
+      .getImgByIdBook(id_img_book)
+      .then((imgBookAsPojo) => {
+        console.log(imgBookAsPojo);
+        if (!!imgBookAsPojo) {
+          return this.parseImgBookPojoIntoDTO(imgBookAsPojo);
+        } else return undefined;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return imgBookPromise;
   }
 
   async getcommentById(id_comment: number): Promise<CommentDTO | undefined> {
@@ -174,6 +193,14 @@ export class BookService {
 
   parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {
     return bookDTO as unknown as BookPojo;
+  }
+
+  parseImgBookPojoIntoDTO(imgBookPojo: ImgBookPojo): ImgBookDTO {
+    const imgBookDTO : ImgBookDTO ={
+      id_img_book: imgBookPojo.dataValues.id_img_book,
+      rute: imgBookPojo.dataValues.id_img_book
+    };
+    return imgBookDTO
   }
 
   parseCommentPojoIntoDTO(commentPojo: CommentPojo): CommentDTO {
