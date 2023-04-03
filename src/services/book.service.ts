@@ -3,15 +3,20 @@ import { AuthorRepository } from "../data/repositories/author.repository";
 import { AuthorPojo } from "../data/models/author.model";
 import { CategoryPojo } from "../data/models/category.model";
 import { BookRepository } from "../data/repositories/book.repository";
-import { AuthorDTO, BookDTO, CategoryDTO } from "../types";
+import { AuthorDTO, BookDTO, CategoryDTO, ImgBookDTO } from "../types";
+import { ImgBookRepository } from "../data/repositories/img-book.repository";
+import { ImgBookPojo } from "../data/models/img-book.model";
 
 export class BookService {
+
   _bookRepository: BookRepository;
   _authorRepository: AuthorRepository;
+  _imgBookRepository: ImgBookRepository;
 
   constructor() {
     this._bookRepository = new BookRepository();
     this._authorRepository = new AuthorRepository();
+    this._imgBookRepository = new ImgBookRepository();
   }
 
   async getAllBooks(): Promise<BookDTO[]> {
@@ -46,6 +51,21 @@ export class BookService {
         throw error;
       });
     return bookPromise;
+  }
+  async getImgByIdBook(id_img_book: number): Promise<ImgBookDTO | undefined> {
+    const imgBookPromise = await this._imgBookRepository
+      .getImgByIdBook(id_img_book)
+      .then((imgBookAsPojo) => {
+        console.log(imgBookAsPojo);
+        if (!!imgBookAsPojo) {
+          return this.parseImgBookPojoIntoDTO(imgBookAsPojo);
+        } else return undefined;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return imgBookPromise;
   }
 
   async addBook(book: BookDTO): Promise<number> {
@@ -131,6 +151,14 @@ export class BookService {
     }
 
     return bookDTO;
+  }
+
+  parseImgBookPojoIntoDTO(imgBookPojo: ImgBookPojo): ImgBookDTO {
+    const imgBookDTO : ImgBookDTO ={
+      id_img_book: imgBookPojo.dataValues.id_img_book,
+      rute: imgBookPojo.dataValues.id_img_book
+    };
+    return imgBookDTO
   }
 
   parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {

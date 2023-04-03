@@ -30,4 +30,13 @@ export class ImgBookRepository {
       return -1;
     }
   }
+  async getImgByIdBook(id_img_book: number): Promise<ImgBookPojo | undefined> {
+    try {
+      return this._imgbookRepository.findByPk(id_img_book);
+
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
 }

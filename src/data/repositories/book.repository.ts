@@ -16,7 +16,7 @@ export class BookRepository {
     this._bookRepository = this._db.sequelize.getRepository(BookPojo);
     this._categoryRepository = this._db.sequelize.getRepository(CategoryPojo);
     this._bookCategoryRepository = this._db.sequelize.getRepository(BookCategoriesPojo);
-   this._authorRepository = this._db.sequelize.getRepository(AuthorPojo);
+    this._authorRepository = this._db.sequelize.getRepository(AuthorPojo);
   }
 
   async getAllBooks(): Promise<BookPojo[]> {
