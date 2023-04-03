@@ -3,15 +3,19 @@ import { AuthorRepository } from "../data/repositories/author.repository";
 import { AuthorPojo } from "../data/models/author.model";
 import { CategoryPojo } from "../data/models/category.model";
 import { BookRepository } from "../data/repositories/book.repository";
-import { AuthorDTO, BookDTO, CategoryDTO } from "../types";
+import { CommentRepository } from "../data/repositories/comment.repository";
+import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO } from "../types";
+import { CommentPojo } from "../data/models/comment.model";
 
 export class BookService {
   _bookRepository: BookRepository;
   _authorRepository: AuthorRepository;
+  _commentRepository: CommentRepository;
 
   constructor() {
     this._bookRepository = new BookRepository();
     this._authorRepository = new AuthorRepository();
+    this._commentRepository = new CommentRepository();
   }
 
   async getAllBooks(): Promise<BookDTO[]> {
@@ -46,6 +50,41 @@ export class BookService {
         throw error;
       });
     return bookPromise;
+  }
+
+  async getcommentById(id_comment: number): Promise<CommentDTO | undefined> {
+    const commentPromise = await this._commentRepository
+      .getCommentById(id_comment)
+      .then((commentAsPojo) => {
+        console.log(commentAsPojo);
+        if (!!commentAsPojo) {
+          return this.parseCommentPojoIntoDTO(commentAsPojo);
+        } else return undefined;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return commentPromise;
+  }
+
+  async getAllCommentsByBookId(id : number): Promise<CommentDTO[]> {
+    const commentPromise = await this._commentRepository
+      .getAllCommentsByBookId(id)
+      .then((commentsAsPojo) => {
+        let commentsAsDto: CommentDTO[] = [];
+        commentsAsPojo.forEach((commentAsPojo) => {
+          let commentAsDto = this.parseCommentPojoIntoDTO(commentAsPojo);
+          commentsAsDto.push(commentAsDto);
+        });
+        return commentsAsDto;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+
+    return commentPromise;
   }
 
   async addBook(book: BookDTO): Promise<number> {
@@ -135,6 +174,18 @@ export class BookService {
 
   parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {
     return bookDTO as unknown as BookPojo;
+  }
+
+  parseCommentPojoIntoDTO(commentPojo: CommentPojo): CommentDTO {
+    const commentDTO: CommentDTO = {
+      id_comment: commentPojo.dataValues.id_comment,
+      rating: commentPojo.dataValues.rating,
+      text: commentPojo.dataValues.text,
+      id_book: commentPojo.dataValues.id_book,
+      id_user: commentPojo.dataValues.id_user,
+    };
+
+    return commentDTO;
   }
 
   parseAuthorPojoIntoDTO(authorPojo: AuthorPojo): AuthorDTO {
