@@ -12,9 +12,9 @@ export class CategoryRepository {
 
   async getAllCategorys(): Promise<CategoryPojo[]> {
     try {
-      const category = await this._categoryRepository.findAll();
-      console.log("category:::", category);
-      return category;
+      const categorys = await this._categoryRepository.findAll();
+      console.log("category:::", categorys);
+      return categorys;
     } catch (error) {
       console.error(error);
       return [];

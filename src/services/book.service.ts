@@ -1,7 +1,9 @@
 import { BookPojo } from "../data/models/book.model";
 import { CategoryPojo } from "../data/models/category.model";
+import { CommentPojo } from "../data/models/comment.model";
+import { ImgBookPojo } from "../data/models/img-book.model";
 import { BookRepository } from "../data/repositories/book.repository";
-import { AuthorDTO, BookDTO, CategoryDTO } from "../types";
+import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO, ImgBookDTO } from "../types";
 
 export class BookService {
   _bookRepository: BookRepository;
@@ -74,7 +76,7 @@ export class BookService {
   async updateBook(bookUpdated: BookDTO): Promise<number> {
     const bookPojo: BookPojo = this.parseDTOIntoPojo(bookUpdated)
     const bookPromise = await this._bookRepository.
-      updateBook(bookPojo).then(id_book=> { return id_book })
+      updateBook(bookPojo).then(id_book => { return id_book })
       .catch(error => {
         console.error(error);
         throw error
@@ -83,32 +85,59 @@ export class BookService {
   }
 
   parsePojoIntoDTO(bookPojo: BookPojo): BookDTO {
-    const authorDTO : AuthorDTO ={
+    const authorDTO: AuthorDTO = {
       id_author: bookPojo.dataValues.author?.dataValues.id_author,
       name_author: bookPojo.dataValues.author?.dataValues.name_author,
     }
-    
+
     const bookDTO: BookDTO = {
       id_book: bookPojo.dataValues.id_book,
       name: bookPojo.dataValues.name,
       summary: bookPojo.dataValues.summary,
       isbn: bookPojo.dataValues.isbn,
       id_author: bookPojo.dataValues.id_author,
-      author :authorDTO,
+      author: authorDTO,
       language: bookPojo.dataValues.language,
-      categories: []
+      categories: [],
+      imgs: [],
+      comments: [],
     };
 
-    if(!!bookPojo.dataValues.categories && bookPojo.dataValues.categories.length > 0){
-      bookPojo.dataValues.categories.forEach((category: CategoryPojo) => {  
-        const categoryDTO : CategoryDTO ={
+    if (!!bookPojo.dataValues.img && bookPojo.dataValues.img.length > 0) {
+      bookPojo.dataValues.img.forEach((img: ImgBookPojo) => {
+        const imgBookDTO: ImgBookDTO = {
+          id_img_book: img.dataValues.id_img_book,
+          rute: img.dataValues.rute,
+          id_book: img.dataValues.id_book,
+        }
+        bookDTO.imgs.push(imgBookDTO)
+      })
+      return bookDTO;
+    }
+
+    if (!!bookPojo.dataValues.comment && bookPojo.dataValues.comment.length > 0) {
+      bookPojo.dataValues.comment.forEach((comment: CommentPojo) => {
+        const commentDTO: CommentDTO = {
+          id_comment: comment.dataValues.id_comment,
+          rating: comment.dataValues.rating,
+          text: comment.dataValues.text,
+          id_book: comment.dataValues.id_book,
+          id_user: comment.dataValues.id_user,
+        }
+        bookDTO.comments.push(commentDTO)
+      })
+      return bookDTO;
+    }
+
+    if (!!bookPojo.dataValues.categories && bookPojo.dataValues.categories.length > 0) {
+      bookPojo.dataValues.categories.forEach((category: CategoryPojo) => {
+        const categoryDTO: CategoryDTO = {
           id_category: category.dataValues.id_category,
           name_category: category.dataValues.name_category,
         }
         bookDTO.categories.push(categoryDTO)
       })
     }
-
     return bookDTO;
   }
 

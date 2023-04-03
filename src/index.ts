@@ -3,7 +3,7 @@ import express from "express";
 import bookRouter from './routes/book.router'
 import userRoutes from './routes/user.routes'
 import copyRouter from "./routes/copy.routes";
-
+import categoryRouter from "./routes/category.routes";
 
 const app = express()
 const cors = require('cors')
@@ -19,6 +19,7 @@ app.get("/ping", (_req, res) => {
 });
 
 app.use('/api/book',bookRouter)
+app.use('/api/category', categoryRouter)
 app.use('/api/user', userRoutes)
 app.use('/api/chat', userRoutes)
 app.use('/api/message', userRoutes)

@@ -1,6 +1,6 @@
 import { CategoryPojo } from "../data/models/category.model";
-import { CategoryDTO } from "../types";
 import { CategoryRepository } from "../data/repositories/category.repository";
+import { CategoryDTO } from "../types";
 
 export class CategoryService {
     _categoryRepository: CategoryRepository;
@@ -28,7 +28,7 @@ export class CategoryService {
     }
     parsePojoIntoDTO(categoryPojo: CategoryPojo): CategoryDTO {
         const categoryDTO: CategoryDTO = {
-            id_category: categoryPojo.dataValues?.id_category,
+            id_category: categoryPojo.dataValues.id_category,
             name_category: categoryPojo.dataValues.name_category
         }
         return categoryDTO;

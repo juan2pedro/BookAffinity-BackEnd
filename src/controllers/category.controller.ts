@@ -2,7 +2,7 @@ import { CategoryService } from "../services/category.service";
 const categoryService: CategoryService = new CategoryService();
 
 export const CategoryController = {
-    getAllCategory: (_req: any, res: any) => {
+    getAllCategorys: (_req: any, res: any) => {
         categoryService
             .getAllCategorys()
             .then((result) => {
