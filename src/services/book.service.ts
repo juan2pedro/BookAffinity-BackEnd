@@ -41,20 +41,24 @@ export class BookService {
   }
 
   async getBookById(id_book: number): Promise<BookDTO | undefined> {
+    console.log("HELLO book service")
+    console.log(id_book)
     const bookPromise = await this._bookRepository
       .getBookById(id_book)
-      .then((bookAsPojo) => {
-        console.log(bookAsPojo);
-        if (!!bookAsPojo) {
-          return this.parsePojoIntoDTO(bookAsPojo);
-        } else return undefined;
-      })
-      .catch((error) => {
-        console.error(error);
-        throw error;
-      });
-    return bookPromise;
+      .then(bookAsPojo =>{
+        if(!!bookAsPojo) {
+          console.log(bookAsPojo)
+          return this.parsePojoIntoDTO(bookAsPojo)
+        }
+        else
+            return undefined 
+        }) .catch(error=>{
+            console.log(error)
+            throw error
+    })
+    return bookPromise
   }
+  
   async getImgByIdBook(id_img_book: number): Promise<ImgBookDTO | undefined> {
     const imgBookPromise = await this._imgBookRepository
       .getImgByIdBook(id_img_book)

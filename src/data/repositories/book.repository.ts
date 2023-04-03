@@ -34,7 +34,7 @@ export class BookRepository {
   }
   async getBookById(id_book: number): Promise<BookPojo | undefined> {
     try {
-      return this._bookRepository.findByPk(id_book, {include : [this._authorRepository , this._categoryRepository]});
+      return this._bookRepository.findByPk(id_book, {include : [this._authorRepository , this._categoryRepository, this._imgBookRepository]});
 
     } catch (error) {
       console.error(error);

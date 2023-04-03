@@ -97,7 +97,9 @@ export class UserService {
   }
 
   async getUserbyId (id:number) : Promise<UserDTO | undefined>{
-    const userPromise = await this._userRepository.getUserbyId(id).then(userAsPojo =>{
+    const userPromise = await this._userRepository
+      .getUserbyId(id)
+      .then(userAsPojo =>{
         if(!!userAsPojo) {
           console.log(userAsPojo)
           return this.parsePojoIntoDTO(userAsPojo)

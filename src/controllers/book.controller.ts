@@ -15,9 +15,11 @@ export const BookController = {
   },
 
   
-  getBookById: (req: any, res: any) => {
+  getBookById : (req: any, res: any) => {
     try {
       const id_book = req.params.id_book;
+      console.log("HELLO book controller")
+      console.log(id_book)
       bookService.getBookById(id_book).then(result => {
         res.json(result);
       });

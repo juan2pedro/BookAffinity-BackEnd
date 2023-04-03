@@ -72,7 +72,7 @@ export const userController = {
         console.log(Error)
         res.sendStatus(500)
     }
-},
+  },
   getChatbyUserId : (req: any, res: any) =>{
     try{
         const chat_id = +req.params.id
