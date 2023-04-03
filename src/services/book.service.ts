@@ -137,7 +137,8 @@ export class BookService {
       id_author: bookPojo.dataValues.id_author,
       author :authorDTO,
       language: bookPojo.dataValues.language,
-      categories: []
+      categories: [],
+      picture: bookPojo.dataValues.imgBook[0]?.dataValues.rute
     };
 
     if(!!bookPojo.dataValues.categories && bookPojo.dataValues.categories.length > 0){
