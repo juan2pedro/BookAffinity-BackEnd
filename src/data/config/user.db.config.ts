@@ -8,8 +8,8 @@ export const connect = () => {
     
     const HOST = !(process.env.DB_HOST == null) ? process.env.DB_HOST : 'localhost'
     const PORT = !(process.env.DB_PORT == null) ? process.env.DB_PORT : 5432
-    const DB_USERNAME = !(process.env.DB_USER == null) ? process.env.DB_USER : 'cami'
-    const DB_PASSWORD = !(process.env.DB_PASSWORD == null) ? process.env.DB_PASSWORD : 'Caracola3!'
+    const DB_USERNAME = !(process.env.DB_USER == null) ? process.env.DB_USER : 'postgres'
+    const DB_PASSWORD = !(process.env.DB_PASSWORD == null) ? process.env.DB_PASSWORD : 'postgres'
     const DB_NAME = 'BookAffinity_db'
     const DB_SCHEMA = 'BookAffinity'
     const DB_DIALECT : any = 'postgres'
