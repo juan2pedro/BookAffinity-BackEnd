@@ -53,11 +53,12 @@ export class UserService {
 
 
 
-  async addUser(user: UserDTO): Promise<number> {
+  async addUser(user: NewUserDTO): Promise<number> {
     const userPojo: UserPojo = this.parseDTOIntoPojo(user);
     const userPromise = await this._userRepository
       .addUser(userPojo)
       .then((id_user) => {
+        console.log(id_user);
         return id_user;
       })
       .catch((error) => {
