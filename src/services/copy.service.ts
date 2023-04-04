@@ -1,5 +1,5 @@
 import { ImgCopyRepository } from './../data/repositories/img-copy.repository';
-import { CopyDTO, NewCopyDTO, NewInvoiceDTO } from "../types";
+import { CopyDTO, NewCopyDTO, NewInvoiceDTO, UserDTO } from "../types";
 import { CopyRepository } from "../data/repositories/copy.repository";
 import { CopyPojo } from "../data/models/copy.model";
 import { InvoicePojo } from '../data/models/invoice.model';
@@ -11,19 +11,6 @@ export class CopyService {
   constructor() {
     this._copyRepository = new CopyRepository();
     this._imgCopyRepository = new ImgCopyRepository();
-  }
-
-  parsePojoIntoDto(copyPojo: CopyPojo): CopyDTO {
-    const copyDto: CopyDTO = {
-      id_copy: copyPojo.dataValues.id_copy,
-      visible: copyPojo.dataValues.visible,
-      price: copyPojo.dataValues.price,
-      status: copyPojo.dataValues.status,
-      id_user: copyPojo.dataValues.id_user,
-      id_book: copyPojo.dataValues.id_book,
-    };
-
-    return copyDto;
   }
 
   async getAllCopiesByBook(id : number): Promise<CopyDTO[]> {
@@ -65,11 +52,11 @@ export class CopyService {
   }
 
   parseDtoIntoPojo(copyDto: CopyDTO): CopyPojo {
-    return copyDto as CopyPojo;
+    return copyDto as unknown as CopyPojo;
   }
 
   parseNewDtoIntoPojo(copyDto: NewCopyDTO): CopyPojo {
-    return copyDto as CopyPojo;
+    return copyDto as unknown as CopyPojo;
   }
 
   async createCopy(copy: NewCopyDTO): Promise<number> {
@@ -114,6 +101,30 @@ export class CopyService {
     return invoicePromise;
   }
   
+  parsePojoIntoDto(copyPojo: CopyPojo): CopyDTO {
+    const UserDTO : UserDTO = {
+          id_user: copyPojo.dataValues.user?.dataValues.id_user,
+          name: copyPojo.dataValues.user?.dataValues.name,
+          pass: copyPojo.dataValues.user?.dataValues.pass,
+          picture: copyPojo.dataValues.user?.dataValues.picture,
+          email: copyPojo.dataValues.user?.dataValues.email,
+          status: copyPojo.dataValues.user?.dataValues.status,
+          id_rol: copyPojo.dataValues.user?.dataValues.id_rol,
+          createdAt: copyPojo.dataValues.user?.dataValues.createdAt,
+          updatedAt: copyPojo.dataValues.user?.dataValues.updatedAt
+    }
+
+    const copyDTO: CopyDTO = {
+      id_copy: copyPojo.dataValues.id_copy,
+      visible: copyPojo.dataValues.visible,
+      price: copyPojo.dataValues.price,
+      status: copyPojo.dataValues.status,
+      id_user: copyPojo.dataValues.id_user,
+      id_book: copyPojo.dataValues.id_book,
+      user: UserDTO
+    };
+    return copyDTO;
+  }
 
   parseNewInvoiceDtoIntoPojo(invoiceDto: NewInvoiceDTO): InvoicePojo {
     return invoiceDto as InvoicePojo;

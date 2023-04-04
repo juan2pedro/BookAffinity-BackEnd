@@ -3,6 +3,7 @@ import { Table, Column, Model, HasMany } from "sequelize-typescript";
 import { STRING, NUMBER, DATE } from "sequelize";
 import { RolPojo } from './rol.model';
 import { ForeignKey, BelongsTo } from "sequelize-typescript";
+import { CopyPojo } from './copy.model';
 
 @Table({
 freezeTableName: true,
@@ -59,6 +60,9 @@ id_rol: number;
 
 @BelongsTo(() => RolPojo)
 rol: RolPojo;
+
+@HasMany(() => CopyPojo)
+copy: CopyPojo[]
 
 @HasMany(()=>ChatPojo)
 chats: ChatPojo[]
