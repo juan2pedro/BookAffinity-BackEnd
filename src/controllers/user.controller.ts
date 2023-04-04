@@ -52,6 +52,15 @@ export const userController = {
       res.sendStatus(500);
     }
   },
+  addChat: (req: any, res: any) => {
+    try {
+      const newChat = req.body;
+      userService.addChat(newChat)
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
   getUserById : (req: any, res: any) =>{
     try{
         const user_id = +req.params.id
@@ -63,7 +72,7 @@ export const userController = {
         console.log(Error)
         res.sendStatus(500)
     }
-},
+  },
   getChatbyUserId : (req: any, res: any) =>{
     try{
         const chat_id = +req.params.id

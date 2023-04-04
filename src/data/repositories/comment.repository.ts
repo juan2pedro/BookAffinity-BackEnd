@@ -30,4 +30,29 @@ export class CommentRepository {
       return -1;
     }
   }
+
+  async getCommentById(id_comment: number): Promise<CommentPojo | undefined> {
+    try {
+      return this._commentRepository.findByPk(id_comment);
+
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
+  
+  async getAllCommentsByBookId(id: number): Promise<CommentPojo[]> {
+    try {
+      const comments = await this._commentRepository.findAll({
+        where: {
+          id_comment: id,
+        },
+      });
+      console.log("comments:::", comments);
+      return comments;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
 }

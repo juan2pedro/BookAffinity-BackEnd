@@ -14,9 +14,12 @@ export const BookController = {
       });
   },
 
-  getBookById: (req: any, res: any) => {
+  
+  getBookById : (req: any, res: any) => {
     try {
       const id_book = req.params.id_book;
+      console.log("HELLO book controller")
+      console.log(id_book)
       bookService.getBookById(id_book).then(result => {
         res.json(result);
       });
@@ -29,6 +32,18 @@ export const BookController = {
     try {
       const id_img_book = req.params.id_book;
       bookService.getImgByIdBook(id_img_book).then(result => {
+        res.json(result);
+      });
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
+
+  getCommentById: (req: any, res: any) => {
+    try {
+      const id_comment = req.params.id_comment;
+      bookService.getcommentById(id_comment).then(result => {
         res.json(result);
       });
     } catch (excepcion) {
@@ -88,6 +103,19 @@ export const BookController = {
   getAllAuthors: (_req: any, res: any) => {
     bookService
       .getAllAuthors()
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((excepcion) => {
+        console.error(excepcion);
+        res.send(500);
+      });
+  },
+
+  getAllCommentsByBookId: (req: any, res: any) => {
+    const id_book = req.params.id
+    bookService
+      .getAllCommentsByBookId(id_book)
       .then((result) => {
         res.json(result);
       })
