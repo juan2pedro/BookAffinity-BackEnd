@@ -82,8 +82,24 @@ export class UserService {
     return messagePromise;
   }
 
+  async addChat(chat: NewChatDTO): Promise<number> {
+    const chatPojo: ChatPojo = this.parseDTOIntoChatPojo(chat);
+    const chatPromise = await this._chatRepository
+      .addChat(chatPojo)
+      .then((id_chat) => {
+        return id_chat;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return chatPromise;
+  }
+
   async getUserbyId (id:number) : Promise<UserDTO | undefined>{
-    const userPromise = await this._userRepository.getUserbyId(id).then(userAsPojo =>{
+    const userPromise = await this._userRepository
+      .getUserbyId(id)
+      .then(userAsPojo =>{
         if(!!userAsPojo) {
           console.log(userAsPojo)
           return this.parsePojoIntoDTO(userAsPojo)
@@ -243,6 +259,10 @@ export class UserService {
   parseDTOIntoMessagePojo(meesageDTO: MessageDTO): MessagePojo {
 
     return meesageDTO as unknown as MessagePojo;
+  }
+  parseDTOIntoChatPojo(chatDTO: NewChatDTO): ChatPojo {
+
+    return chatDTO as unknown as ChatPojo;
   }
 }
 

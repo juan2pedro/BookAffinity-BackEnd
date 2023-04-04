@@ -1302,13 +1302,13 @@ INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYST
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (44, 'https://picsum.photos/350/350', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (49, 'https://picsum.photos/350/350', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (6, 'https://imgur.com/BkqNIm4', NULL);
-INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (10, 'https://https://imgur.com/BkqNIm4.photos/350/350', NULL);
+INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (10, 'https://picsum.photos/400/600', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (13, 'https://imgur.com/BkqNIm4', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (15, 'https://imgur.com/BkqNIm4', NULL);
-INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (17, 'https://imgur.com/BkqNIm4https://picsum.photos/350/350', NULL);
+INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (17, 'https://picsum.photos/400/600', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (18, 'https://imgur.com/BkqNIm4', NULL);
-INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (23, 'https://pichttps://imgur.com/BkqNIm4sum.photos/350/350', NULL);
-INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (25, 'https://imgur.com/BkqNIm4https://picsum.photos/350/350', NULL);
+INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (23, 'https://picsum.photos/400/600', NULL);
+INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (25, 'https://imgur.com/BkqNIm4', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (39, 'https://imgur.com/BkqNIm4', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (41, 'https://imgur.com/BkqNIm4', NULL);
 INSERT INTO "BookAffinity".img_book (id_img_book, rute, id_book) OVERRIDING SYSTEM VALUE VALUES (45, 'https://imgur.com/BkqNIm4', NULL);
