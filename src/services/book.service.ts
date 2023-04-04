@@ -2,27 +2,25 @@ import { BookPojo } from "../data/models/book.model";
 import { AuthorRepository } from "../data/repositories/author.repository";
 import { AuthorPojo } from "../data/models/author.model";
 import { CategoryPojo } from "../data/models/category.model";
-import { CommentPojo } from "../data/models/comment.model";
-import { ImgBookPojo } from "../data/models/img-book.model";
 import { BookRepository } from "../data/repositories/book.repository";
-<<<<<<< HEAD
+
 import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO, ImgBookDTO } from "../types";
-=======
-import { AuthorDTO, BookDTO, CategoryDTO, ImgBookDTO } from "../types";
+import { CommentRepository } from "../data/repositories/comment.repository";
+import { CommentPojo } from "../data/models/comment.model";
 import { ImgBookRepository } from "../data/repositories/img-book.repository";
 import { ImgBookPojo } from "../data/models/img-book.model";
->>>>>>> origin/dev
 
 export class BookService {
-
   _bookRepository: BookRepository;
   _authorRepository: AuthorRepository;
   _imgBookRepository: ImgBookRepository;
+  _commentRepository: CommentRepository;
 
   constructor() {
     this._bookRepository = new BookRepository();
     this._authorRepository = new AuthorRepository();
     this._imgBookRepository = new ImgBookRepository();
+    this._commentRepository = new CommentRepository();
   }
 
   async getAllBooks(): Promise<BookDTO[]> {
@@ -44,20 +42,24 @@ export class BookService {
   }
 
   async getBookById(id_book: number): Promise<BookDTO | undefined> {
+    console.log("HELLO book service")
+    console.log(id_book)
     const bookPromise = await this._bookRepository
       .getBookById(id_book)
-      .then((bookAsPojo) => {
-        console.log(bookAsPojo);
-        if (!!bookAsPojo) {
-          return this.parsePojoIntoDTO(bookAsPojo);
-        } else return undefined;
-      })
-      .catch((error) => {
-        console.error(error);
-        throw error;
-      });
-    return bookPromise;
+      .then(bookAsPojo =>{
+        if(!!bookAsPojo) {
+          console.log(bookAsPojo)
+          return this.parsePojoIntoDTO(bookAsPojo)
+        }
+        else
+            return undefined 
+        }) .catch(error=>{
+            console.log(error)
+            throw error
+    })
+    return bookPromise
   }
+  
   async getImgByIdBook(id_img_book: number): Promise<ImgBookDTO | undefined> {
     const imgBookPromise = await this._imgBookRepository
       .getImgByIdBook(id_img_book)
@@ -72,6 +74,41 @@ export class BookService {
         throw error;
       });
     return imgBookPromise;
+  }
+
+  async getcommentById(id_comment: number): Promise<CommentDTO | undefined> {
+    const commentPromise = await this._commentRepository
+      .getCommentById(id_comment)
+      .then((commentAsPojo) => {
+        console.log(commentAsPojo);
+        if (!!commentAsPojo) {
+          return this.parseCommentPojoIntoDTO(commentAsPojo);
+        } else return undefined;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return commentPromise;
+  }
+
+  async getAllCommentsByBookId(id : number): Promise<CommentDTO[]> {
+    const commentPromise = await this._commentRepository
+      .getAllCommentsByBookId(id)
+      .then((commentsAsPojo) => {
+        let commentsAsDto: CommentDTO[] = [];
+        commentsAsPojo.forEach((commentAsPojo) => {
+          let commentAsDto = this.parseCommentPojoIntoDTO(commentAsPojo);
+          commentsAsDto.push(commentAsDto);
+        });
+        return commentsAsDto;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+
+    return commentPromise;
   }
 
   async addBook(book: BookDTO): Promise<number> {
@@ -186,6 +223,10 @@ export class BookService {
     return bookDTO;
   }
 
+  parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {
+    return bookDTO as unknown as BookPojo;
+  }
+
   parseImgBookPojoIntoDTO(imgBookPojo: ImgBookPojo): ImgBookDTO {
     const imgBookDTO : ImgBookDTO ={
       id_img_book: imgBookPojo.dataValues.id_img_book,
@@ -194,8 +235,16 @@ export class BookService {
     return imgBookDTO
   }
 
-  parseDTOIntoPojo(bookDTO: BookDTO): BookPojo {
-    return bookDTO as unknown as BookPojo;
+  parseCommentPojoIntoDTO(commentPojo: CommentPojo): CommentDTO {
+    const commentDTO: CommentDTO = {
+      id_comment: commentPojo.dataValues.id_comment,
+      rating: commentPojo.dataValues.rating,
+      text: commentPojo.dataValues.text,
+      id_book: commentPojo.dataValues.id_book,
+      id_user: commentPojo.dataValues.id_user,
+    };
+
+    return commentDTO;
   }
 
   parseAuthorPojoIntoDTO(authorPojo: AuthorPojo): AuthorDTO {
