@@ -49,6 +49,7 @@ export class CopyDTO {
   status: string;
   id_user: number;
   id_book: number;
+  imgs : ImgCopyDTO[];
 }
 export class InvoiceDTO {
   id_invoice: number;

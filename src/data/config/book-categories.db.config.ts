@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { BookCategoriesPojo } from "../models/book-categories";
-
+import { CategoryPojo } from "../models/category.model";
 export const connect = () => {
     
     const HOST = !(process.env.DB_HOST == null) ? process.env.DB_HOST : 'localhost'

@@ -50,9 +50,10 @@ export class CopyPojo extends Model {
   })
   price: number;
 
-  @HasOne(() => InvoicePojo) invoice: InvoicePojo[]
+  @HasOne(() => InvoicePojo)
+  invoice: InvoicePojo[]
 
   @HasMany(() => ImgCopyPojo)
-  ImgCopy: ImgCopyPojo[];
+  imgCopy: ImgCopyPojo[];
 
 }

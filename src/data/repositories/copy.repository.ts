@@ -1,17 +1,20 @@
 import { CopyPojo } from "../models/copy.model";
 import { connect } from "../config/copy.db.config";
 import { InvoicePojo } from "../models/invoice.model";
+import { ImgCopyPojo } from "../models/img-copy.model";
 
 export class CopyRepository {
   _db: any = {};
   _copyRepository: any;
   _invoiceRepository: any;
+  _imgCopyRepository: any;
 
 
   constructor() {
     this._db = connect();
     this._copyRepository = this._db.sequelize.getRepository(CopyPojo);
     this._invoiceRepository = this._db.sequelize.getRepository(InvoicePojo);
+    this._imgCopyRepository = this._db.sequelize.getRepository(ImgCopyPojo);
 
   }
 
@@ -21,7 +24,9 @@ export class CopyRepository {
         where: {
           id_book: id,
         },
-      });
+        include : [this._imgCopyRepository]
+      }
+      );
       console.log("copys:::", copys);
       return copys;
     } catch (error) {

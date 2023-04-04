@@ -1382,7 +1382,7 @@ INSERT INTO "BookAffinity".img_comment (id_img_comment, rute, id_comment) OVERRI
 -- Data for Name: img_copy; Type: TABLE DATA; Schema: BookAffinity; Owner: admin
 --
 
-INSERT INTO "BookAffinity".img_copy (id_img_copy, rute, id_copy) OVERRIDING SYSTEM VALUE VALUES (1, 'https://picsum.photos/350/350', NULL);
+INSERT INTO "BookAffinity".img_copy (id_img_copy, rute, id_copy) OVERRIDING SYSTEM VALUE VALUES (1, 'https://picsum.photos/350/350', 32);
 INSERT INTO "BookAffinity".img_copy (id_img_copy, rute, id_copy) OVERRIDING SYSTEM VALUE VALUES (2, 'https://picsum.photos/350/350', NULL);
 INSERT INTO "BookAffinity".img_copy (id_img_copy, rute, id_copy) OVERRIDING SYSTEM VALUE VALUES (3, 'https://picsum.photos/350/350', NULL);
 INSERT INTO "BookAffinity".img_copy (id_img_copy, rute, id_copy) OVERRIDING SYSTEM VALUE VALUES (4, 'https://picsum.photos/350/350', NULL);
