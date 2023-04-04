@@ -50,6 +50,7 @@ export class CopyDTO {
   id_user: number;
   id_book: number;
   imgs : ImgCopyDTO[];
+  user?: UserDTO
 }
 export class InvoiceDTO {
   id_invoice: number;

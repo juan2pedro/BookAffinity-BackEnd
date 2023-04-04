@@ -11,9 +11,9 @@ export class BookRepository {
   _bookRepository: any;
   _categoryRepository: any;
   _bookCategoryRepository: any;
-  _authorRepository: any;
-  _imgBookRepository: any;
-  _commentRepository: any;
+  _authorRepository : any;
+  _imgBookRepository : any;
+  _commentRepository : any;
 
   constructor() {
     this._db = connect();
@@ -27,7 +27,7 @@ export class BookRepository {
 
   async getAllBooks(): Promise<BookPojo[]> {
     try {
-      const books = await this._bookRepository.findAll({ include: [this._categoryRepository, this._imgBookRepository] });
+      const books = await this._bookRepository.findAll({include : [this._authorRepository, this._categoryRepository, this._imgBookRepository]});
       console.log("books:::", books);
       return books;
     } catch (error) {
@@ -37,7 +37,7 @@ export class BookRepository {
   }
   async getBookById(id_book: number): Promise<BookPojo | undefined> {
     try {
-      return this._bookRepository.findByPk(id_book, {include : [this._authorRepository , this._categoryRepository, this._imgBookRepository]});
+      return this._bookRepository.findByPk(id_book, {include : [this._authorRepository , this._categoryRepository, this._imgBookRepository, this._commentRepository]});
 
     } catch (error) {
       console.error(error);

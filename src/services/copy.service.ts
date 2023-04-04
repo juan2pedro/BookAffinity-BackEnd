@@ -1,8 +1,8 @@
-import { CopyDTO, ImgCopyDTO, NewCopyDTO, NewInvoiceDTO } from "../types";
+import { CopyDTO, ImgCopyDTO, NewCopyDTO, NewInvoiceDTO ,UserDTO } from "../types";
+import { ImgCopyRepository } from './../data/repositories/img-copy.repository';
 import { CopyRepository } from "../data/repositories/copy.repository";
 import { CopyPojo } from "../data/models/copy.model";
 import { InvoicePojo } from '../data/models/invoice.model';
-import { ImgCopyRepository } from "../data/repositories/img-copy.repository";
 import { ImgCopyPojo } from '../data/models/img-copy.model';
 export class CopyService {
   _copyRepository: CopyRepository;
@@ -12,7 +12,6 @@ export class CopyService {
     this._copyRepository = new CopyRepository();
     this._imgCopyRepository = new ImgCopyRepository();
   }
-
 
   async getAllCopiesByBook(id : number): Promise<CopyDTO[]> {
     const copyPromise = await this._copyRepository
@@ -101,9 +100,21 @@ export class CopyService {
       });
     return invoicePromise;
   }
+  
   parsePojoIntoDto(copyPojo: CopyPojo): CopyDTO {
-    console.log("Pojo::" , copyPojo)
-    const copyDto: CopyDTO = {
+    const UserDTO : UserDTO = {
+          id_user: copyPojo.dataValues.user?.dataValues.id_user,
+          name: copyPojo.dataValues.user?.dataValues.name,
+          pass: copyPojo.dataValues.user?.dataValues.pass,
+          picture: copyPojo.dataValues.user?.dataValues.picture,
+          email: copyPojo.dataValues.user?.dataValues.email,
+          status: copyPojo.dataValues.user?.dataValues.status,
+          id_rol: copyPojo.dataValues.user?.dataValues.id_rol,
+          createdAt: copyPojo.dataValues.user?.dataValues.createdAt,
+          updatedAt: copyPojo.dataValues.user?.dataValues.updatedAt
+    }
+
+    const copyDTO: CopyDTO = {
       id_copy: copyPojo.dataValues.id_copy,
       visible: copyPojo.dataValues.visible,
       price: copyPojo.dataValues.price,
@@ -116,16 +127,16 @@ export class CopyService {
   if (!!copyPojo.dataValues.imgCopy && copyPojo.dataValues.imgCopy.length > 0) {
     copyPojo.dataValues.imgCopy.forEach((img: ImgCopyPojo) => {
       const imgCopyDTO : ImgCopyDTO ={
-        id_img_copy: img.dataValues.id_img_book,
+        id_img_copy: img.dataValues.id_img_copy,
         rute: img.dataValues.rute,
         id_copy: img.dataValues.id_copy,
       };
-      copyDto.imgs.push(imgCopyDTO)
+      copyDTO.imgs.push(imgCopyDTO)
     })
-    return copyDto;
+    return copyDTO;
   }
 
-    return copyDto;
+    return copyDTO;
   }
   
   parseNewInvoiceDtoIntoPojo(invoiceDto: NewInvoiceDTO): InvoicePojo {
