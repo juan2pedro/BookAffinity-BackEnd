@@ -1,26 +1,30 @@
 import { CopyPojo } from "../models/copy.model";
 import { connect } from "../config/copy.db.config";
 import { InvoicePojo } from "../models/invoice.model";
+import { UserPojo } from "../models/user.model";
 
 export class CopyRepository {
   _db: any = {};
   _copyRepository: any;
   _invoiceRepository: any;
+  _userRepository: any;
 
 
   constructor() {
     this._db = connect();
     this._copyRepository = this._db.sequelize.getRepository(CopyPojo);
     this._invoiceRepository = this._db.sequelize.getRepository(InvoicePojo);
-
+    this._userRepository = this._db.sequelize.getRepository(UserPojo);
   }
 
   async getAllCopiesByBook(id: number): Promise<CopyPojo[]> {
     try {
       const copys = await this._copyRepository.findAll({
+        include : [this._userRepository],
         where: {
           id_book: id,
         },
+        limit: 3
       });
       console.log("copys:::", copys);
       return copys;

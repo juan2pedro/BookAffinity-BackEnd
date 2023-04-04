@@ -47,6 +47,7 @@ export class CopyDTO {
   status: string;
   id_user: number;
   id_book: number;
+  user?: UserDTO
 }
 export class InvoiceDTO {
   id_invoice: number;
