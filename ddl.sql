@@ -1150,6 +1150,8 @@ INSERT INTO "BookAffinity".chat (id_chat, id_user1, id_user2) OVERRIDING SYSTEM 
 -- Data for Name: comment; Type: TABLE DATA; Schema: BookAffinity; Owner: admin
 --
 
+-- INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (51, 2, 'Este libro es un clásico de la literatura y es imprescindible para cualquier persona interesada en el género.', 69, 8);
+-- INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (52, 4, 'Este libro es un clásico de la literatura y es imprescindible', 69, 8);
 INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (1, 2, 'Este libro es un clásico de la literatura y es imprescindible para cualquier persona interesada en el género.', 33, 8);
 INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (2, 2, 'La trama de este libro es emocionante y me mantuvo enganchado desde el principio hasta el final.', 20, 12);
 INSERT INTO "BookAffinity".comment OVERRIDING SYSTEM VALUE VALUES (3, 5, 'El estilo de escritura del autor es poético y evocador, y me transportó a otro mundo.', 9, 33);

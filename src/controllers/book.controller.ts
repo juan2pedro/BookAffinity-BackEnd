@@ -63,6 +63,17 @@ export const BookController = {
       res.sendStatus(500);
     }
   },
+  addComment: (req: any, res: any) => {
+    try {
+      const newComment = req.body;
+      bookService.addComment(newComment).then((result) => {
+        res.json(result);
+      });
+    } catch (excepcion) {
+      console.log(excepcion);
+      res.sendStatus(500);
+    }
+  },
 
   updateBook: (req: any, res: any) => {
     try {

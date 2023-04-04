@@ -3,6 +3,7 @@ import { STRING, NUMBER } from "sequelize";
 import { BelongsTo, ForeignKey, HasMany } from "sequelize-typescript";
 import { BookPojo } from "./book.model";
 import { ImgCommentPojo } from "./img-comment.model";
+import { UserPojo } from "./user.model";
 
 @Table({
   freezeTableName: true,
@@ -36,8 +37,13 @@ export class CommentPojo extends Model {
   @Column
   id_book: number;
 
+  @ForeignKey(() => UserPojo)
+  @Column
+  id_user: number;
+
   @BelongsTo(() => BookPojo)
   book: BookPojo;
+
 
   @HasMany(() => ImgCommentPojo)
   imgComment: ImgCommentPojo[]

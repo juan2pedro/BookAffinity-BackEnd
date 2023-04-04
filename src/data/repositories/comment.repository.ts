@@ -45,7 +45,7 @@ export class CommentRepository {
     try {
       const comments = await this._commentRepository.findAll({
         where: {
-          id_comment: id,
+          id_book: id,
         },
       });
       console.log("comments:::", comments);
