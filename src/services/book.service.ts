@@ -4,7 +4,7 @@ import { AuthorPojo } from "../data/models/author.model";
 import { CategoryPojo } from "../data/models/category.model";
 import { BookRepository } from "../data/repositories/book.repository";
 import { CommentRepository } from "../data/repositories/comment.repository";
-import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO, ImgBookDTO } from "../types";
+import { AuthorDTO, BookDTO, CategoryDTO, CommentDTO, ImgBookDTO, NewCommentDTO } from "../types";
 import { CommentPojo } from "../data/models/comment.model";
 import { ImgBookRepository } from "../data/repositories/img-book.repository";
 import { ImgBookPojo } from "../data/models/img-book.model";
@@ -124,6 +124,21 @@ export class BookService {
     return bookPromise;
   }
 
+  async addComment(comment: CommentDTO): Promise<number> {
+    const commentPojo: CommentPojo = this.parseCommentDTOIntoPojo(comment);
+    const commentPromise = await this._commentRepository
+      .addComment(commentPojo)
+      .then((comment_id) => {
+        return comment_id;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return commentPromise;
+  }
+
+
   async deleteBook(id_book: number): Promise<any> {
     const bookPromise = await this._bookRepository
       .deleteBook(id_book)
@@ -218,6 +233,9 @@ export class BookService {
     };
 
     return commentDTO;
+  }
+  parseCommentDTOIntoPojo(commentDTO: NewCommentDTO): CommentPojo {
+    return commentDTO as unknown as CommentPojo;
   }
 
   parseAuthorPojoIntoDTO(authorPojo: AuthorPojo): AuthorDTO {
