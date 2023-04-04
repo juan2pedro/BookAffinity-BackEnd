@@ -102,7 +102,7 @@ export class CopyService {
   }
   
   parsePojoIntoDto(copyPojo: CopyPojo): CopyDTO {
-    const UserDTO : UserDTO = {
+    const userDTO : UserDTO = {
           id_user: copyPojo.dataValues.user?.dataValues.id_user,
           name: copyPojo.dataValues.user?.dataValues.name,
           pass: copyPojo.dataValues.user?.dataValues.pass,
@@ -120,8 +120,10 @@ export class CopyService {
       price: copyPojo.dataValues.price,
       status: copyPojo.dataValues.status,
       id_user: copyPojo.dataValues.id_user,
+      user: userDTO,
       id_book: copyPojo.dataValues.id_book,
       imgs: []
+    
     };
     
   if (!!copyPojo.dataValues.imgCopy && copyPojo.dataValues.imgCopy.length > 0) {

@@ -17,6 +17,7 @@ export class CopyRepository {
     this._copyRepository = this._db.sequelize.getRepository(CopyPojo);
     this._invoiceRepository = this._db.sequelize.getRepository(InvoicePojo);
     this._userRepository = this._db.sequelize.getRepository(UserPojo);
+    this._imgCopyRepository = this._db.sequelize.getRepository(ImgCopyPojo);
   }
 
   async getAllCopiesByBook(id: number): Promise<CopyPojo[]> {
